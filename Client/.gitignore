@@ -1,0 +1,10 @@
+bin/
+obj/
+obj/*
+NpmJS/node_modules/
+NpmJS/package-lock.json
+*.copy
+
+NpmJS/*.cs
+NpmJS/*.d
+NpmJS/**/*.razor
