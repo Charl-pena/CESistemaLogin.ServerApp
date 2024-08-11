@@ -1,0 +1,12 @@
+$w: 156.75px;
+$h: 160px;
+
+.logo-item {
+  --f: 0.25;
+  display: inline-flex;
+  height: calc(var(--f) * #{$h});
+  vertical-align: top;
+  min-width: calc(var(--f) * #{$h});
+  max-width: $w;
+  // width: calc(var(--f) * #{$w});
+}

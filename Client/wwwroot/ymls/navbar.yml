@@ -1,0 +1,15 @@
+---
+Logoitem:
+  Class: logo-item
+  Href: /
+  SVGPath: /images/logo.svg
+Mainbar:
+  DefaultTheme: bd-theme-malaquita is-malaquita
+  Items:
+    - Name: Inicio
+      Class: is-tab
+      Href: /
+      Icon: null
+      ShortName: inicio
+      Title: Pagina Inicial
+    

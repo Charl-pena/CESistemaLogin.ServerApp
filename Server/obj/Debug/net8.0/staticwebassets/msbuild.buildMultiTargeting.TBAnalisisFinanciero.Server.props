@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/TBAnalisisFinanciero.Server.props" />
+</Project>

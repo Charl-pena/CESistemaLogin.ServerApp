@@ -1,0 +1,12 @@
+<main class="bd-docs is-fullwidth mb-6 pb-6 pt-5" >
+   <div class="bd-docs-content ">
+      <div class="container">
+         @ChildContent
+      </div>
+   </div>
+</main>
+
+@code {
+   [Parameter]
+   public RenderFragment? ChildContent { get; set; }
+}

@@ -1,0 +1,192 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/TBAnalisisFinanciero.Client.csproj": {}
+  },
+  "projects": {
+    "/home/moruz/Documents/Blazor/CEBlazorBulma/CEBlazorBulma.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/moruz/Documents/Blazor/CEBlazorBulma/CEBlazorBulma.csproj",
+        "projectName": "CEBlazorBulma",
+        "projectPath": "/home/moruz/Documents/Blazor/CEBlazorBulma/CEBlazorBulma.csproj",
+        "packagesPath": "/home/moruz/.nuget/packages/",
+        "outputPath": "/home/moruz/Documents/Blazor/CEBlazorBulma/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/moruz/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components": {
+              "target": "Package",
+              "version": "[8.0.6, )"
+            },
+            "Microsoft.AspNetCore.Components.Web": {
+              "target": "Package",
+              "version": "[8.0.6, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "YamlDotNet": {
+              "target": "Package",
+              "version": "[15.1.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.7, 8.0.7]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.107/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/TBAnalisisFinanciero.Client.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/TBAnalisisFinanciero.Client.csproj",
+        "projectName": "TBAnalisisFinanciero.Client",
+        "projectPath": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/TBAnalisisFinanciero.Client.csproj",
+        "packagesPath": "/home/moruz/.nuget/packages/",
+        "outputPath": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/moruz/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/moruz/Documents/Blazor/CEBlazorBulma/CEBlazorBulma.csproj": {
+                "projectPath": "/home/moruz/Documents/Blazor/CEBlazorBulma/CEBlazorBulma.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Blazored.LocalStorage": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.Authentication": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.DevServer": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )",
+              "autoReferenced": true
+            },
+            "Microsoft.NET.Sdk.WebAssembly.Pack": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.7, )",
+              "autoReferenced": true
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.7, 8.0.7]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+              "version": "[8.0.7, 8.0.7]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.107/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "browser-wasm": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

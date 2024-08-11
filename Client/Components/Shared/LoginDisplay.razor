@@ -1,0 +1,75 @@
+@using Blazored.LocalStorage;
+@using System.Security.Claims
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CEBlazorBulma.Services.ISVGService SvgService
+
+<AuthorizeView>
+	<Authorized>
+		@* Render the content if the user is logged in *@
+		<button class="bd-nav-item is-github  p-0" @onclick="() => activeUserChange()" 
+		 >
+			<span class="bd-nav-item-name is-hidden-touch">
+      	   <span class="is-hidden is-block-widescreen is-size-6">
+					Hola @context.User.FindFirst("given_name")?.Value
+				</span>
+      	</span>
+			<figure class="image is-32x32">
+				@((MarkupString)svgProfileNoImage)
+			</figure>
+		</button>
+		<div class="bd-user @activeUser">
+			<div class="field is-flex">
+				<button class="ml-auto" @onclick="LogoutAsync">Cerrar sesión</button>
+			</div>
+			<div class="is-flex is-justify-content-space-around">
+				<div class="">
+					<figure class="image is-96x96">
+						@((MarkupString)svgProfileNoImage)
+					</figure>
+				</div>
+				<div class="is-flex is-flex-direction-column is-justify-content-center">
+					<span class="title is-5 mb-0">
+						@context.User.FindFirst("given_name")?.Value
+					</span>
+					<span>
+						@context.User.FindFirst("unique_name")?.Value
+					</span>
+					<a class="" href="#">
+							Mi cuenta
+					</a>
+				</div>
+			</div>
+		</div>
+	</Authorized>
+	<NotAuthorized>
+		@* Render the content if the user is not logged in *@
+		<a class="bd-nav-item is-github  p-1" href="/authentication/login">
+			<span class="bd-nav-item-name is-hidden-touch">
+      	   <span class="is-hidden is-block-widescreen">Login</span>
+      	</span>
+			<figure class="image is-32x32">
+				@((MarkupString)svgLogin)
+			</figure>
+		</a>
+	</NotAuthorized>
+</AuthorizeView>
+
+@code 
+{
+	private string activeUser = "";
+	private string svgLogin = "";
+	private string svgProfileNoImage = "";
+
+	void activeUserChange() => activeUser = (string.IsNullOrEmpty(activeUser)) ? "is-active" : "";
+	private async Task LogoutAsync()
+	{
+		await LocalStorage.RemoveItemAsync("348uv380x3u8dxre88cfu8hxghftg9g76");
+		await AuthenticationStateProvider.GetAuthenticationStateAsync();
+	}
+	protected override async Task OnInitializedAsync()
+   {
+      svgLogin = await SvgService.GetSvgContent("/images/login.svg");
+      svgProfileNoImage = await SvgService.GetSvgContent("/images/user.svg");
+   }
+}

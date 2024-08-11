@@ -1,0 +1,41 @@
+﻿@inherits LayoutComponentBase
+@inject CEBlazorBulma.Services.IYamlService yamlService
+@inject IConfiguration Configuration
+<div class=@globalTheme>
+   <CascadingValue Value=@OnGlobalThemeChange>
+      @if (navbarContent is not null)
+      {
+         <CEBlazorBulma.Components.NavBar NavBarContent=@navbarContent  WithThemeBar=@false>
+            <LoginArea>
+               <LoginDisplay/>
+            </LoginArea>
+         </CEBlazorBulma.Components.NavBar>
+      }
+
+      @Body
+
+   </CascadingValue>
+    
+</div>
+
+
+@code{
+   private Action<string>? OnGlobalThemeChange;
+   private string globalTheme = "";
+   private CEBlazorBulma.Models.NavBarModel? navbarContent;
+   protected override async Task OnInitializedAsync()
+   {
+      // Deserializar contenido del archivo YAML
+      navbarContent = await yamlService.DeserializeFromFile<CEBlazorBulma.Models.NavBarModel>(Configuration["NavBarSettings:NavBarYAML"] ?? "");
+      globalTheme = navbarContent?.Mainbar?.DefaultTheme ?? "";
+      OnGlobalThemeChange = UpdateGlobalTheme;
+   }
+   public void UpdateGlobalTheme(string newTheme)
+   {
+      if (globalTheme != newTheme)
+      {
+         globalTheme = newTheme;
+         StateHasChanged();
+      }
+   }
+}

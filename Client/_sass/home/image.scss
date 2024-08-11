@@ -1,0 +1,25 @@
+@use "../sass/utilities/mixins" as mx;
+
+
+@include mx.mobile {
+
+   .is-img-responsive {
+      height: 170px;
+      width: 170px;
+   }
+}
+
+@include mx.tablet {
+
+   .is-img-responsive {
+      height: 173px;
+      width: 173px;
+   }
+}
+
+@include mx.from(1400px) {
+   .is-img-responsive {
+      height: 180px;
+      width: 180px;
+   }
+}

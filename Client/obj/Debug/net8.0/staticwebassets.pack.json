@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/bin/Debug/net8.0/wwwroot/_framework/blazor.webassembly.js",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/obj/Debug/net8.0/compressed/ia3rzgpm2o.gz",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/appsettings.Development.json",
+      "PackagePath": "staticwebassets/appsettings.Development.json"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/css/app.css",
+      "PackagePath": "staticwebassets/css/app.css"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/css/app.css.map",
+      "PackagePath": "staticwebassets/css/app.css.map"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/icon-192.png",
+      "PackagePath": "staticwebassets/icon-192.png"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "/home/moruz/Documents/Blazor/TBAnalisisFinancieroApp/Client/wwwroot/ymls/navbar.yml",
+      "PackagePath": "staticwebassets/ymls/navbar.yml"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.TBAnalisisFinanciero.Client.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.TBAnalisisFinanciero.Client.props",
+      "PackagePath": "build\\TBAnalisisFinanciero.Client.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.TBAnalisisFinanciero.Client.props",
+      "PackagePath": "buildMultiTargeting\\TBAnalisisFinanciero.Client.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.TBAnalisisFinanciero.Client.props",
+      "PackagePath": "buildTransitive\\TBAnalisisFinanciero.Client.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

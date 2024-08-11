@@ -1,0 +1,60 @@
+$bootstrap: #6f5499;
+$github: #1b1f23;
+$facebook: #1877f2;
+$twitter: #55acee;
+$patreon: #f96854;
+$patreon-blue: #052d49;
+$fortyfour: #6c1ad0;
+$amazon: #ffd863;
+$bleeding-green: #abf47c;
+$bleeding-red: #dc2329;
+$rss: #f26522;
+$algolia: #3c4fe0;
+$star: #ffd257;
+$purple: #b86bff;
+$sass: #bf4080;
+$mercedes: #0b938f;
+$sun: #ffb70f;
+$moon: #8158f5;
+$start: hsla(28, 86%, 61%, 1);
+$css: #264de4;
+$html: #e44d26;
+$js: #f7df1e;
+
+$primary:$bleeding-red;
+
+$additional-colors: (
+  "css": $css,
+  "github": $github,
+  "html": $html,
+  "mercedes": $mercedes,
+  "moon": $moon,
+  "patreon": $patreon,
+  "rss": $rss,
+  "sass": $sass,
+  "start": $start,
+  "sun": $sun,
+  "blot": $bleeding-red,
+  "twitter": $twitter,
+);
+
+
+$dark-colors: (
+  "github": #fff,
+);
+
+$themes: (
+  "code": "link",
+  "css": "css",
+  "customize": "info",
+  "malaquita": "success",
+  "jupiter": "warning",
+  "html": "html",
+  "venus": "danger",
+  "primary": "primary",
+  "blot": "blot",
+  "sponsor": "patreon",
+  "start": "start",
+  "twitter": "twitter",
+  "moon": "moon",
+);

@@ -1,0 +1,111 @@
+@use "sass/utilities/css-variables" as cv;
+@use "sass/utilities/initial-variables" as iv;
+@use "sass/utilities/mixins" as mx;
+// @use "sass/elements/box" as ebox;
+
+//Mis Clases
+.no-box-in-mobile{
+  @include mx.mobile {
+    background-color: unset;
+    border-radius: unset;
+    box-shadow: none;
+    padding: unset;   
+  }
+}
+
+.responsive-p-box
+{
+  @include mx.mobile {
+    padding: unset !important;   
+  }
+  @include mx.tablet {
+    padding-top: 3rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    padding-bottom: 2.5rem !important;
+
+  }
+}
+
+// Custom styles for docs
+svg {
+   height: auto;
+   width: auto;
+ }
+ 
+ .is-absolute{
+   position: absolute !important;
+ }
+ 
+ .is-wordbreaked{
+   word-break: break-word;
+   overflow-wrap: break-word;
+ }
+ 
+ .fa-sun {
+   transform-origin: center;
+   transform: rotate(22.5deg);
+ }
+ 
+ .bd-icon-size .icon {
+   background-color: hsl(44deg, 100%, 77%);
+ }
+ 
+ $container-offset: 2 * iv.$gap;
+ $container-max-width: iv.$fullhd;
+ 
+ :root {
+   --container-width: calc(100vw - 3rem);
+   --container-width-desktop: #{iv.$desktop - $container-offset};
+   --container-width-widescreen: #{min(iv.$widescreen, $container-max-width) -
+     $container-offset};
+   --container-width-fullhd: #{min(iv.$fullhd, $container-max-width) -
+     $container-offset};
+ 
+   @include mx.desktop {
+     --container-width: var(--container-width-desktop);
+   }
+ 
+   @include mx.widescreen {
+     --container-width: var(--container-width-widescreen);
+   }
+ 
+   @include mx.fullhd {
+     --container-width: var(--container-width-fullhd);
+   }
+ }
+ 
+ .bd-footer {
+   background-color: cv.getVar("scheme-main");
+   // background: var(--bulma-background);
+   color: cv.getVar("text-weak");
+   position: relative;
+   z-index: 1;
+ 
+   strong {
+     color: inherit;
+   }
+ }
+ 
+ .button.is-twitter,
+ .button.is-facebook {
+   color: #fff;
+   padding: 4px 12px 5px 16px;
+   font-size: 0.875rem;
+ }
+ 
+ .#{iv.$class-prefix}message-body {
+   .highlight {
+     background-color: hsl(
+       #{cv.getVar("message-h")},
+       #{cv.getVar("message-s")},
+       #{cv.getVar("message-header-color-l")}
+     );
+     color: hsl(
+       #{cv.getVar("message-h")},
+       #{cv.getVar("message-s")},
+       #{cv.getVar("message-header-background-l")}
+     );
+   }
+ }
+ 

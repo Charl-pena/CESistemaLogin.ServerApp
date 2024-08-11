@@ -1,0 +1,72 @@
+@page "/authentication/login"
+
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization;
+@inject IAuthenticationService AuthService
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>Login</PageTitle>
+
+<h2>Alpha Login</h2>
+
+<PageContent>
+   <div class="container is-max-tablet">
+      <div class="box no-box-in-mobile responsive-p-box">
+         <EditForm Model="_model" OnValidSubmit="SubmitLoginFormAsync" class="">
+            <DataAnnotationsValidator />
+               <div class="block">
+                  <label>Sign in</label>
+               </div>
+
+               <div class="field pb-4">
+                  <InputText @bind-Value="@_model.Username" class="input" placeholder="Email"
+                     autocomplete="username"/>
+
+                  <ValidationMessage For="@(() => _model.Username)" class="help is-danger"/>
+               </div>
+
+               <div class="field pb-4">
+                  <InputText type="password" @bind-Value="@_model.Password" class="input is-small" 
+                     placeholder="Password" autocomplete="current-password"/>
+
+                  <ValidationMessage For="@(() => _model.Password)" class="help is-danger"/>
+               </div>
+
+            <div class="field pt-6 is-flex">
+               <button type="submit" class="ml-auto button has-text-weight-normal">Next</button>
+            </div>
+         </EditForm>
+      </div>
+   </div>
+</PageContent>
+
+
+
+@code {
+   private LoginRequest _model = new();
+
+   private async Task SubmitLoginFormAsync()
+   {
+      try
+      {
+         // Based on the logic of the method, if the request to the API fails,
+         // it will throw an exception, otherwise it will return the token.
+         var loginResult = await AuthService.LoginUserAsync(_model);
+
+         // Store the token in the local storage
+         if(loginResult?.AccessToken != null){
+            await LocalStorage.SetItemAsync("348uv380x3u8dxre88cfu8hxghftg9g76", loginResult.AccessToken);
+            await AuthStateProvider.GetAuthenticationStateAsync();
+            Navigation.NavigateTo($"https://localhost:7180?token={loginResult.AccessToken}", forceLoad: true);
+         }
+      }
+      catch (Exception ex)
+      {
+         // TODO: Log the error in Chapter 11
+         Console.WriteLine(ex.Message);
+      }
+   }
+
+}

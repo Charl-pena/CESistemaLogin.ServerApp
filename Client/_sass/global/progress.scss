@@ -1,0 +1,60 @@
+@use "../sass/utilities/css-variables" as cv;
+@use "../sass/utilities/mixins" as mx;
+@use "../utils";
+
+
+.is-smaller{
+   height: 0.55rem !important;
+ }
+
+.is-blot {
+   --bulma-progress-value-background-color: #{cv.getVar("blot-base")};
+}
+
+.is-jupiter {
+   --bulma-progress-value-background-color: #{cv.getVar("warning-base")};
+}
+
+.is-customize {
+   --bulma-progress-value-background-color: #{cv.getVar("info-base")};
+}
+
+.is-system,
+.is-docs {
+   --bulma-progress-value-background-color: #{cv.getVar("success-base")};
+}
+
+.is-venus {
+   --bulma-progress-value-background-color: #{cv.getVar("danger-base")};
+}
+
+.is-github {
+   --bulma-progress-value-background-color: #{cv.getVar("github-base")};
+}
+
+.is-twitter {
+   --bulma-progress-value-background-color: #{cv.getVar("twitter-base")};
+}
+
+.is-backers,
+.is-sponsor {
+   --bulma-progress-value-background-color: #{cv.getVar("patreon-base")};
+}
+
+.is-code {
+   --bulma-progress-value-background-color: #{cv.getVar("link-base")};
+}
+
+.is-search,
+.is-search-desktop {
+   --bulma-progress-value-background-color: #{cv.getVar("link-base")};
+}
+
+.is-sun {
+   --bulma-progress-value-background-color: #{cv.getVar("sun-base")};
+}
+
+.is-moon,
+.is-bootstrap {
+   --bulma-progress-value-background-color: #{cv.getVar("moon-base")};
+}

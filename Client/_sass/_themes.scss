@@ -1,0 +1,188 @@
+@use "colors" as colors;
+@use "sass/utilities/css-variables" as cv;
+@use "sass/themes/light";
+
+:root {
+  @each $name, $color in colors.$additional-colors {
+    @include cv.generate-color-palette($name, $color, light.$scheme-main-l);
+    @include cv.generate-on-scheme-colors($name, $color, light.$scheme-main);
+  }
+
+  min-height: 100vh;
+  transition-duration: 50ms;
+  transition-property: background-color;
+
+  --sun: #{colors.$sun};
+  --moon: #{colors.$moon};
+  --animation-duration: 1s;
+  --circle-delay-a: 0s;
+  --circle-delay-b: 0.5s;
+  --circle-delay-c: 1s;
+  --background-offset: -1%;
+  --border-offset: -6%;
+
+  --grad-angle: 96deg;
+  --grad-red: linear-gradient(
+    var(--grad-angle),
+    #f14668 4.28%,
+    #ff5a5c 51.66%,
+    #f1a246 100%
+  );
+  --grad-blue: linear-gradient(
+    var(--grad-angle),
+    #669aff 4.28%,
+    #3bd5ff 51.18%,
+    #3affff 100%
+  );
+  --grad-green: linear-gradient(
+    var(--grad-angle),
+    #38d58e 11.31%,
+    #89f072 58.45%,
+    #bef055 103.75%
+  );
+  --grad-grey: linear-gradient(
+    var(--grad-angle),
+    #c5c5c5 11.31%,
+    #dcdcdc 50.53%,
+    #a4a4a4 103.75%
+  );
+
+  --html5: #e44d26;
+  --html5-invert: #ebebeb;
+
+  --gh-dark: #25292e;
+  --gh-dimmed: #6a737d;
+  --gh-text: #e1e4e8;
+  --gh-red: #f97583;
+  --gh-orange: #ffab70;
+  --gh-yellow: #ffea7f;
+  --gh-green: #85e89d;
+  --gh-blue: #79b8ff;
+  --gh-blue-light: #9ecbff;
+  --gh-purple: #b392f0;
+  --gh-pink: #f692ce;
+
+  // --hl-green: #37e7ac;
+  // --hl-cyan: #51fbde;
+  // --hl-blue: #00b2ff;
+  // --hl-purple: #9a89b4;
+  // --hl-lavender: #9b6dff;
+  // --hl-pink: #ff5cd3;
+  // --hl-rose: #ff6b9d;
+  // --hl-orange: #ff9970;
+  // --hl-yellow: #fed604;
+  // --hl-gray-01: #d9e0e8;
+  // --hl-gray-02: #808182;
+  // --hl-gray-09: #1f2330;
+
+  --hl-green: #85e89d;
+  --hl-cyan: #47ffe7;
+  --hl-blue: #79b8ff;
+  --hl-purple: #b392f0;
+  --hl-pink: #f692ce;
+  --hl-rose: #f69292;
+  --hl-orange: #ffab70;
+  --hl-yellow: #ffea7f;
+
+  --hl-gray-00: #fafbfc;
+  --hl-gray-01: #f6f8fa;
+  --hl-gray-02: #e1e4e8;
+  --hl-gray-03: #d1d5da;
+  --hl-gray-04: #959da5;
+  --hl-gray-05: #6a737d;
+  --hl-gray-06: #586069;
+  --hl-gray-07: #444d56;
+  --hl-gray-08: #2f363d;
+  --hl-gray-09: #24292e;
+  --hl-radius: 1rem;
+
+  // --hl-gray-01: #a4aab2;
+  // --hl-gray-02: #6a737d;
+  // --hl-gray-09: #25292e;
+
+  --hl-color: var(--hl-orange);
+  --hl-background: var(--hl-gray-09);
+}
+
+
+@mixin docs-light-theme {
+  --background-offset: -1%;
+  --border-offset: -6%;
+  --bulma-github-l: 10%;
+
+  .bd-svg-black {
+    path{
+      fill: var(--theme-color);
+    }
+  }
+
+  .bd-hidden-light {
+    display: none !important;
+  }
+
+  .bd-hidden-dark {
+    display: flex !important;
+  }
+}
+
+@mixin docs-dark-theme {
+  --background-offset: 1%;
+  --border-offset: 2%;
+  --bulma-github-l: 100%;
+
+  .bd-svg-black {
+    path, text{
+      fill: var(--theme-color);
+    }
+  }
+
+  .bd-hidden-light {
+    display: flex !important;
+  }
+
+  .bd-hidden-dark {
+    display: none !important;
+  }
+}
+
+@include cv.system-theme($name: "light") {
+  @include docs-light-theme();
+}
+
+@include cv.system-theme($name: "dark") {
+  @include docs-dark-theme();
+}
+
+@include cv.bulma-theme($name: "light") {
+  @include docs-light-theme();
+}
+
+@include cv.bulma-theme($name: "dark") {
+  @include docs-dark-theme();
+} 
+
+
+$themes: (
+  "code": "link",
+  "css": "css",
+  "customize": "info",
+  "malaquita": "success",
+  "jupiter": "warning",
+  "html": "html",
+  "venus": "danger",
+  "primary": "primary",
+  "blot": "blot",
+  "sponsor": "patreon",
+  "start": "start",
+  "twitter": "twitter",
+  "moon": "moon",
+);
+
+@each $theme, $color in $themes {
+  .bd-theme-#{$theme} {
+    --theme-h: #{cv.getVar("-h", $color)};
+    --theme-s: #{cv.getVar("-s", $color)};
+    --theme-l: #{cv.getVar("-l", $color)};
+    --theme-color: hsl(var(--theme-h), var(--theme-s), var(--theme-l));
+  }
+}
