@@ -1,22 +1,30 @@
 ﻿@inherits LayoutComponentBase
 @inject CEBlazorBulma.Services.IYamlService yamlService
 @inject IConfiguration Configuration
-<div class=@globalTheme>
-   <CascadingValue Value=@OnGlobalThemeChange>
-      @if (navbarContent is not null)
-      {
-         <CEBlazorBulma.Components.NavBar NavBarContent=@navbarContent  WithThemeBar=@false>
-            <LoginArea>
-               <LoginDisplay/>
-            </LoginArea>
-         </CEBlazorBulma.Components.NavBar>
-      }
 
-      @Body
-      
-   </CascadingValue>
-    
-</div>
+<AuthorizeView Roles="UserNoMFA">    
+
+   <Authorized>
+      <MFALogicComponent/>
+    </Authorized>
+    <NotAuthorized>
+      <div class=@globalTheme>
+         <CascadingValue Value=@OnGlobalThemeChange>
+            @if (navbarContent is not null)
+            {
+               <CEBlazorBulma.Components.NavBar NavBarContent=@navbarContent  WithThemeBar=@false>
+                  <LoginArea>
+                     <LoginDisplay/>
+                  </LoginArea>
+               </CEBlazorBulma.Components.NavBar>
+            }
+
+            @Body
+         
+         </CascadingValue>
+      </div>
+    </NotAuthorized>
+</AuthorizeView>
 
 
 @code{
@@ -26,7 +34,8 @@
    protected override async Task OnInitializedAsync()
    {
       // Deserializar contenido del archivo YAML
-      navbarContent = await yamlService.DeserializeFromFile<CEBlazorBulma.Models.NavBarModel>(Configuration["NavBarSettings:NavBarYAML"] ?? "");
+      navbarContent = await yamlService
+         .DeserializeFromFile<CEBlazorBulma.Models.NavBarModel>(Configuration["NavBarSettings:NavBarYAML"] ?? "");
       globalTheme = navbarContent?.Mainbar?.DefaultTheme ?? "";
       OnGlobalThemeChange = UpdateGlobalTheme;
    }

@@ -64,7 +64,9 @@
 	void activeUserChange() => activeUser = (string.IsNullOrEmpty(activeUser)) ? "is-active" : "";
 	private async Task LogoutAsync()
 	{
-		await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+		if(!(await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))){
+			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+		}
 		await AuthStateProvider.GetAuthenticationStateAsync();
 	}
 	protected override async Task OnInitializedAsync()
@@ -74,9 +76,12 @@
 		var token = queryParams["token"];
 		if(token != null)
 		{
-			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+			// Hay que checar antes de borrar, suelte un error intentar eliminar un elemento que no existe
+			if(!(await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))){
+				await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+			}
 			await LocalStorage.SetItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ", token);
-         await AuthStateProvider.GetAuthenticationStateAsync();
+			await AuthStateProvider.GetAuthenticationStateAsync();
 		}
       svgLogin = await SvgService.GetSvgContent("/images/login.svg");
       svgProfileNoImage = await SvgService.GetSvgContent("/images/user.svg");

@@ -12,13 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddDbContext<AppDbContext>();
+// builder.Services.AddDbContext<AppDbContext>();
 
-builder.Services.AddIdentityCore<AppUser>()
-    .AddRoles<IdentityRole>()
-    .AddSignInManager()
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
+// builder.Services.AddIdentityCore<AppUser>()
+    // .AddRoles<IdentityRole>()
+    // .AddSignInManager()
+    // .AddEntityFrameworkStores<AppDbContext>()
+    // .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -40,28 +40,30 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
         ValidAudience = audience,
         ValidIssuer = issuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
     };
 });
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    // Password settings
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 8;
-    options.Password.RequiredUniqueChars = 1;
-    // User settings
-    options.User.RequireUniqueEmail = true;
-    // Lockout settings
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 3;
-    options.Lockout.AllowedForNewUsers = true;
-});
+// builder.Services.Configure<IdentityOptions>(options =>
+// {
+//     // Password settings
+//     options.Password.RequireDigit = true;
+//     options.Password.RequireLowercase = true;
+//     options.Password.RequireNonAlphanumeric = true;
+//     options.Password.RequireUppercase = true;
+//     options.Password.RequiredLength = 8;
+//     options.Password.RequiredUniqueChars = 1;
+//     // User settings
+//     options.User.RequireUniqueEmail = true;
+//     // Lockout settings
+//     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+//     options.Lockout.MaxFailedAccessAttempts = 3;
+//     options.Lockout.AllowedForNewUsers = true;
+// });
 
 // Use the policy syntax to add authorization
 builder.Services.AddAuthorizationBuilder()

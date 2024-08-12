@@ -1,8 +1,10 @@
 @inject NavigationManager Navigation 
+@inject IConfiguration Configuration
 
 @code {
 	protected override void OnInitialized()
 	{
-		Navigation.NavigateTo("/authentication/login");
+		string? destino = Configuration["ClientUrl"];
+		Navigation.NavigateTo($"{destino}/authentication/login", forceLoad: true);;
 	}
 }
