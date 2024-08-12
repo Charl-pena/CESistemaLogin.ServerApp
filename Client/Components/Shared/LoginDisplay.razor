@@ -1,8 +1,9 @@
 @using Blazored.LocalStorage;
 @using System.Security.Claims
 @inject ILocalStorageService LocalStorage
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AuthenticationStateProvider AuthStateProvider
 @inject CEBlazorBulma.Services.ISVGService SvgService
+@inject NavigationManager Navigation
 
 <AuthorizeView>
 	<Authorized>
@@ -60,15 +61,23 @@
 	private string activeUser = "";
 	private string svgLogin = "";
 	private string svgProfileNoImage = "";
-
 	void activeUserChange() => activeUser = (string.IsNullOrEmpty(activeUser)) ? "is-active" : "";
 	private async Task LogoutAsync()
 	{
-		await LocalStorage.RemoveItemAsync("348uv380x3u8dxre88cfu8hxghftg9g76");
-		await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+		await AuthStateProvider.GetAuthenticationStateAsync();
 	}
 	protected override async Task OnInitializedAsync()
    {
+		var uri = new Uri(Navigation.Uri);
+      var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+		var token = queryParams["token"];
+		if(token != null)
+		{
+			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+			await LocalStorage.SetItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ", token);
+         await AuthStateProvider.GetAuthenticationStateAsync();
+		}
       svgLogin = await SvgService.GetSvgContent("/images/login.svg");
       svgProfileNoImage = await SvgService.GetSvgContent("/images/user.svg");
    }
