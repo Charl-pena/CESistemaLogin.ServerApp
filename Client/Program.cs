@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using CEBlazorBulma.Configuration;
 using TBAnalisisFinanciero.Client;
+using TBAnalisisFinanciero.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -23,5 +24,7 @@ builder.Services.AddCEYamlService(sp => YamlDeserializerFactory.CreateDeserializ
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationService>();
+
 
 await builder.Build().RunAsync();

@@ -86,7 +86,7 @@ builder.Services.AddAuthentication(options =>
 // Use the policy syntax to add authorization
 builder.Services.AddAuthorizationBuilder()
    // Use the policy syntax to add authorization
-    .AddPolicy("RequireVipUserRole", policy => policy.RequireRole(AppRoles.UserNoMFA))
+    .AddPolicy("RequireUserNoMFARole", policy => policy.RequireRole(AppRoles.UserNoMFA))
     .AddPolicy("RequireVipUserRole", policy => policy.RequireRole(AppRoles.VipUser))
     .AddPolicy("RequireUserRole", policy => policy.RequireRole(AppRoles.User));
 

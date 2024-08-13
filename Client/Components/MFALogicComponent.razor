@@ -1,5 +1,10 @@
-@inject AuthenticationStateProvider AuthStateProvider
+@using Blazored.LocalStorage;
+@using System.Security.Claims
 
+@inject AuthenticationStateProvider AuthStateProvider
+@inject AuthenticationService AuthService
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
 
 @code
 {  
@@ -9,5 +14,12 @@
          //Para esto necesito llamar a la API (Hay que crear un servicio)
       //Tras eso necesito mostrar ya sea el componente de configuración o el de ingresar token
       //Si es valido guardo el usuario en el localstorage (debe de cambiar su rol o claim)
+      //¿Como obtener el username? El token lo saco de la URL
+      var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+      var email = authState.User.FindFirst("unique_name")?.Value;
+      if(email != null)
+      {
+         var response = await AuthService.MfaStatusAsync(requestModel: new(){UserEmail = email} );
+      }
    }
 }
