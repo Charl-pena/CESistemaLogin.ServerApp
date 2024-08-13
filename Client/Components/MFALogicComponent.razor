@@ -1,3 +1,13 @@
 @inject AuthenticationStateProvider AuthStateProvider
 
-Mi tia Jenny necesita que le revienten el culo la muy zorra
+
+@code
+{  
+   protected override async Task OnInitializedAsync()
+   {
+      //Necesito revisar el status del MFA del usuario
+         //Para esto necesito llamar a la API (Hay que crear un servicio)
+      //Tras eso necesito mostrar ya sea el componente de configuración o el de ingresar token
+      //Si es valido guardo el usuario en el localstorage (debe de cambiar su rol o claim)
+   }
+}

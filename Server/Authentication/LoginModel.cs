@@ -11,9 +11,15 @@ public class LoginModel
     public string Password { get; set; } = string.Empty;
 }
 
+public class UserNameModel
+{
+    [Required(ErrorMessage = "User name is required")]
+    public string UserEmail { get; set; } = string.Empty;
+}
+
 public class ValidateUsernameRequest
 {
-    [Required(ErrorMessage = "Enter a valid email address or phone number.")]
+    [Required(ErrorMessage = "Enter a valid email address")]
     public string UserName { get; set; } = string.Empty;
 }
 

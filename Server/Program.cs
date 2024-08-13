@@ -6,7 +6,25 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TBAnalisisFinanciero.Server.Authentication;
 
+static void ChecarConfiguracion(WebApplicationBuilder builder)
+{
+   var apiUrl = builder.Configuration["APIUrl"];
+   if (string.IsNullOrEmpty(apiUrl))
+   {
+      throw new Exception("El valor de ApiUrl ni de ServerUrl pueden ser null o vacío");
+   }
+}
+
+
 var builder = WebApplication.CreateBuilder(args);
+ChecarConfiguracion(builder);
+
+builder.Services.AddHttpClient("TheApiClient", client =>
+{
+    string apiUrl = builder.Configuration["APIUrl"]!;
+    client.BaseAddress = new Uri(apiUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -68,7 +86,7 @@ builder.Services.AddAuthentication(options =>
 // Use the policy syntax to add authorization
 builder.Services.AddAuthorizationBuilder()
    // Use the policy syntax to add authorization
-    .AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(AppRoles.Administrator))
+    .AddPolicy("RequireVipUserRole", policy => policy.RequireRole(AppRoles.UserNoMFA))
     .AddPolicy("RequireVipUserRole", policy => policy.RequireRole(AppRoles.VipUser))
     .AddPolicy("RequireUserRole", policy => policy.RequireRole(AppRoles.User));
 
