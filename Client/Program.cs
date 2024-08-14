@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components.Authorization;
+// using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 using Blazored.LocalStorage;
 using CEBlazorBulma.Configuration;
 using TBAnalisisFinanciero.Client;
+using TBAnalisisFinanciero.Client.Helpers;
 using TBAnalisisFinanciero.Client.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -23,7 +25,7 @@ builder.Services.AddCENavBarServices("TheServerAPI");
 builder.Services.AddCEYamlService(sp => YamlDeserializerFactory.CreateDeserializer(), "TheServerAPI");
 
 builder.Services.AddAuthorizationCore();
-builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider,JwtAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationService>();
 
 

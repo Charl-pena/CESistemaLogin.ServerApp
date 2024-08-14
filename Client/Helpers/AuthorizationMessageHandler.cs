@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 
-namespace TBAnalisisFinanciero.Client;
+namespace TBAnalisisFinanciero.Client.Helpers;
 
 public class AuthorizationMessageHandler : DelegatingHandler
 {

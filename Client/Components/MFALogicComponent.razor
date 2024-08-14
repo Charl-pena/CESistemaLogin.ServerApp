@@ -1,10 +1,9 @@
 @using Blazored.LocalStorage;
 @using System.Security.Claims
 
-@inject AuthenticationStateProvider AuthStateProvider
+@* @inject JwtAuthenticationStateProvider AuthStateProvider *@
 @inject AuthenticationService AuthService
-@inject ILocalStorageService LocalStorage
-@inject NavigationManager Navigation
+@* @inject ILocalStorageService LocalStorage *@
 
 @code
 {  
@@ -13,8 +12,12 @@
       //Necesito revisar el status del MFA del usuario
          //Tras eso necesito mostrar ya sea el componente de configuración o el de ingresar token
          //Si es valido guardo el nuevo token del usuario en el localstorage (debe de cambiar su rol o claim)
-      var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-      var email = authState.User.FindFirst("unique_name")?.Value;
+         
+      //Es un error llamar directamente a GetAuthenticationStateAsync
+      //var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+      //var email = authState.User.FindFirst("unique_name")?.Value;
+      //var email = AuthStateProvider.CurrentUser.unique_name;
+      var email = "";
       if(!String.IsNullOrEmpty(email))
       {
          var response = await AuthService.MfaStatusAsync(requestModel: new(){UserEmail = email} );
@@ -26,10 +29,12 @@
          {
             //Aqui ya tiene activado el MFA
             Console.WriteLine("Aqui ya tiene activado el MFA");
+            Console.WriteLine(email);
          }else
          {
             //Aquí NO tiene configurado el MFA
             Console.WriteLine("Aquí NO tiene configurado el MFA");
+            Console.WriteLine(email);
                //Aquí response deberia contener el token
                Console.WriteLine(response.AccessToken);
                //Con este token debo de generar el qr

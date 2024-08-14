@@ -2,21 +2,29 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using TBAnalisisFinanciero.Client.Models;
 
-namespace TBAnalisisFinanciero.Client;
+namespace TBAnalisisFinanciero.Client.Helpers;
 
-public class JwtAuthenticationStateProvider : AuthenticationStateProvider
+public class JwtAuthenticationStateProvider : AuthenticationStateProvider, IDisposable
 {
 	private readonly ILocalStorageService _storage;
+
+	public UserModel CurrentUser { get; private set; } = new();
 	public JwtAuthenticationStateProvider(ILocalStorageService storage) 
 	{
 		_storage = storage;
+		AuthenticationStateChanged += OnAuthenticationStateChangedAsync;
 	}
+
+	public void Dispose() => AuthenticationStateChanged -= OnAuthenticationStateChangedAsync;
 
 	public async override Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
+		Console.WriteLine("cuello de monica");
 		if (await _storage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))
 		{
+			Console.WriteLine("cuello de maryori");
 			// Read and parse the token 
 			var tokenAsString = await _storage.GetItemAsync<string>("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
 			var tokenHandler = new JwtSecurityTokenHandler()
@@ -36,7 +44,10 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 				var authState = new AuthenticationState(user);
 				
 				NotifyAuthenticationStateChanged(Task.FromResult(authState));
-
+				if (user != null)
+				{
+					CurrentUser = UserModel.FromClaimsPrincipal(user);
+				}
 				return authState;
 			}
 		}
@@ -45,4 +56,13 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 		NotifyAuthenticationStateChanged(Task.FromResult(anonymousAuthState));
 		return anonymousAuthState;
 	}
+
+	private async void OnAuthenticationStateChangedAsync(Task<AuthenticationState> task)
+   {
+      var authenticationState = await task;
+      if (authenticationState is not null)
+      {
+         CurrentUser = UserModel.FromClaimsPrincipal(authenticationState.User);
+      }
+   }
 }

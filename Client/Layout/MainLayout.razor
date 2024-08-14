@@ -1,55 +1,29 @@
 ﻿@inherits LayoutComponentBase
 
-@using Blazored.LocalStorage;
+<AuthorizeView Roles="UserNoMFA">
+   <Authorized>
+      <MFALogicComponent />
+   </Authorized>
+</AuthorizeView>
 
-@inject AuthenticationStateProvider AuthStateProvider
-@inject ILocalStorageService LocalStorage
-@inject NavigationManager Navigation
+<AuthorizeView Roles="User, Administrator">
+   <Authorized>
+      <Aplicacion>
+         <Contenido>
+            @Body
+         </Contenido>
+      </Aplicacion>
+   </Authorized>
+</AuthorizeView>
 
-@if (yaSeEjecuto)
-{
-   <AuthorizeView Roles="UserNoMFA">
-
-      <Authorized>
-         <MFALogicComponent />
-      </Authorized>
-   </AuthorizeView>
-
-   <AuthorizeView Roles="User, Administrator">
-      <Authorized>
-         <Aplicacion>
-            <Contenido>
-               @Body
-            </Contenido>
-         </Aplicacion>
-      </Authorized>
-   </AuthorizeView>
-
-   <AuthorizeView Roles="Administrator, UserNoMFA, User">
-      <NotAuthorized>
-         <RedirectToLogin/>
-      </NotAuthorized>
-   </AuthorizeView>
-}
+<AuthorizeView Roles="Administrator, UserNoMFA, User">
+   <NotAuthorized>
+      <RedirectToLogin/>
+   </NotAuthorized>
+</AuthorizeView>
 
 
 @code {
-   bool yaSeEjecuto = false;
-   protected override async Task OnInitializedAsync()
-   {
-      var uri = new Uri(Navigation.Uri);
-      var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
-      var token = queryParams["token"];
-      if (token != null)
-      {
-         // Hay que checar antes de borrar, suelte un error intentar eliminar un elemento que no existe
-         if (!(await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ")))
-         {
-            await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
-         }
-         await LocalStorage.SetItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ", token);
-         await AuthStateProvider.GetAuthenticationStateAsync();
-         yaSeEjecuto = true;
-      }
-   }
+   /*
+   */
 }
