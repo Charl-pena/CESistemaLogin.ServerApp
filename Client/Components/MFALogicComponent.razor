@@ -11,15 +11,29 @@
    protected override async Task OnInitializedAsync()
    {
       //Necesito revisar el status del MFA del usuario
-         //Para esto necesito llamar a la API (Hay que crear un servicio)
-      //Tras eso necesito mostrar ya sea el componente de configuración o el de ingresar token
-      //Si es valido guardo el usuario en el localstorage (debe de cambiar su rol o claim)
-      //¿Como obtener el username? El token lo saco de la URL
+         //Tras eso necesito mostrar ya sea el componente de configuración o el de ingresar token
+         //Si es valido guardo el nuevo token del usuario en el localstorage (debe de cambiar su rol o claim)
       var authState = await AuthStateProvider.GetAuthenticationStateAsync();
       var email = authState.User.FindFirst("unique_name")?.Value;
-      if(email != null)
+      if(!String.IsNullOrEmpty(email))
       {
          var response = await AuthService.MfaStatusAsync(requestModel: new(){UserEmail = email} );
+         if(response == null)
+         {
+            //Aqui hubo un error
+            Console.WriteLine("Aqui hubo un error");
+         }else if(String.IsNullOrEmpty(response.AccessToken))
+         {
+            //Aqui ya tiene activado el MFA
+            Console.WriteLine("Aqui ya tiene activado el MFA");
+         }else
+         {
+            //Aquí NO tiene configurado el MFA
+            Console.WriteLine("Aquí NO tiene configurado el MFA");
+               //Aquí response deberia contener el token
+               Console.WriteLine(response.AccessToken);
+               //Con este token debo de generar el qr
+         }
       }
    }
 }

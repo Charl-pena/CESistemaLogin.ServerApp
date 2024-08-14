@@ -1,9 +1,15 @@
+@using Blazored.LocalStorage;
+
+@inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation 
 @inject IConfiguration Configuration
 
 @code {
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
+		if(!(await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))){
+			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+		}
 		string? destino = Configuration["ClientUrl"];
 		Navigation.NavigateTo($"{destino}/authentication/login", forceLoad: true);;
 	}

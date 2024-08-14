@@ -15,7 +15,7 @@ public class AuthenticationService
       _httpClient = httpClient; 
    }
 
-   public async Task<TokenResponse> MfaStatusAsync(UserNameModel requestModel)
+   public async Task<TokenResponse?> MfaStatusAsync(UserNameModel requestModel)
    {
          /*No neceseramiente, puedo utilizar el mismo mecanismo de localstorage, solo necesito 
          actualizar el valor una vez se haya terminado la verificacion del usuario*/
@@ -30,19 +30,17 @@ public class AuthenticationService
             Console.WriteLine(error); 
             throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
          }
-         Console.WriteLine(loginResponse.AccessToken); 
          return loginResponse; 
       }
       else if(response.StatusCode == HttpStatusCode.NotFound)
       {
          // var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
-         Console.WriteLine("Le llenare a monica la cara con semen"); 
-         // return new TokenResponse(){AccessToken = ""};
+         return new TokenResponse(){AccessToken = ""};
          // throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");            
          // throw new Exception("Error al leer la respuesta de la API");            
          // TODO: Handle the error in a proper way
       }
-      return new TokenResponse(){AccessToken = ""};
+      return null;
 
    }
 

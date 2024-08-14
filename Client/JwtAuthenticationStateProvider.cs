@@ -24,17 +24,21 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 				//Desactivar el mappeo de claims con valores por defecto definidos por la libreria de ASP.NET
             MapInboundClaims = false
       	};
-			var token = tokenHandler.ReadJwtToken(tokenAsString);
-         var claims = token.Claims.ToList();
-         
-       
-		   var identity = new ClaimsIdentity(claims, "jwt", JwtRegisteredClaimNames.Sub, "role");
-			var user = new ClaimsPrincipal(identity);
-			var authState = new AuthenticationState(user);
+			//Hay que checar que sea un token bien formado
+			if(tokenHandler.CanReadToken(tokenAsString))
+			{
+				var token = tokenHandler.ReadJwtToken(tokenAsString);
+				var claims = token.Claims.ToList();
+				
 			
-			NotifyAuthenticationStateChanged(Task.FromResult(authState));
+				var identity = new ClaimsIdentity(claims, "jwt", JwtRegisteredClaimNames.Sub, "role");
+				var user = new ClaimsPrincipal(identity);
+				var authState = new AuthenticationState(user);
+				
+				NotifyAuthenticationStateChanged(Task.FromResult(authState));
 
-			return authState;
+				return authState;
+			}
 		}
 		var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity()); // No claims or authentication scheme provided
 		var anonymousAuthState = new AuthenticationState(anonymousUser);
