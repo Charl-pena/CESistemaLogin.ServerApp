@@ -17,9 +17,9 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider, IDisp
 		AuthenticationStateChanged += OnAuthenticationStateChangedAsync;
 	}
 
-	public void Dispose() => AuthenticationStateChanged -= OnAuthenticationStateChangedAsync;
+   public void Dispose() => AuthenticationStateChanged -= OnAuthenticationStateChangedAsync;
 
-	public async override Task<AuthenticationState> GetAuthenticationStateAsync()
+   public async override Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
 		Console.WriteLine("cuello de monica");
 		if (await _storage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))

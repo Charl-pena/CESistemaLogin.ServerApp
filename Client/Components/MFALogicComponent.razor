@@ -1,9 +1,8 @@
 @using Blazored.LocalStorage;
 @using System.Security.Claims
 
-@* @inject JwtAuthenticationStateProvider AuthStateProvider *@
+@inject AuthenticationStateProvider AuthStateProvider
 @inject AuthenticationService AuthService
-@* @inject ILocalStorageService LocalStorage *@
 
 @code
 {  
@@ -14,10 +13,7 @@
          //Si es valido guardo el nuevo token del usuario en el localstorage (debe de cambiar su rol o claim)
          
       //Es un error llamar directamente a GetAuthenticationStateAsync
-      //var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-      //var email = authState.User.FindFirst("unique_name")?.Value;
-      //var email = AuthStateProvider.CurrentUser.unique_name;
-      var email = "";
+      var email = ((JwtAuthenticationStateProvider)AuthStateProvider).CurrentUser.unique_name;
       if(!String.IsNullOrEmpty(email))
       {
          var response = await AuthService.MfaStatusAsync(requestModel: new(){UserEmail = email} );
