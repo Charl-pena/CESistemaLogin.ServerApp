@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.AccessControl;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace TBAnalisisFinanciero.Server.Controllers;
 
@@ -24,67 +25,64 @@ public class AccountController(
 
    [HttpPost("api-mfa")]
    [Authorize]
-   public async Task<IActionResult> APIMfa([FromBody] UserNameModel model)
+   public async Task<IActionResult> MfaStatus([FromBody] UserNameModel model)
    {
-      var uri = "/Account/mfa"; // Ruta específica sin la BaseAddress
-      // Check if the model is valid
-      if (ModelState.IsValid)
-      {
-         var headerAuth =
-            Request.Headers.Authorization[0]?.Split(" ");
-         if(headerAuth != null){
-            try
-            {
-               // Serialize the model to JSON
-               var jsonContent = new StringContent(
-                  JsonSerializer.Serialize(model),
-                  Encoding.UTF8,
-                  "application/json"
-               );
-               _httpClient.DefaultRequestHeaders.Authorization = 
-                     new AuthenticationHeaderValue(headerAuth[0], headerAuth[1]);
-               // Send the POST request to the destination API
-               var response = await _httpClient.PostAsync(uri, jsonContent);
-
-               // Check if the response was successful
-               if (response.IsSuccessStatusCode)
-               {
-                  var responseData = await response.Content.ReadAsStringAsync();
-                  return Ok(responseData);
-               }
-               else
-               {
-                  return StatusCode((int)response.StatusCode, response.ReasonPhrase);
-               }
-            }
-            catch (Exception ex)
-            {
-               return StatusCode(500, $"Error al comunicarse con la API: {ex.Message}");
-            }
-         }
-      }
-      return BadRequest(ModelState);
+      return await ForwardRequestAsync("/Account/mfa", model);
    }
 
-   // [HttpPost("login")]
-   // public async Task<IActionResult> Login([FromBody] LoginModel model)
-   // {
-   //    // Check if the model is valid
-   //    if (ModelState.IsValid)
-   //    {
-   //       var user = await userManager.FindByNameAsync(model.UserName) ?? await userManager.FindByEmailAsync(model.UserName);
-   //       if (user != null)
-   //       {
-   //          var result =
-   //             await signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
-   //          if (result.Succeeded)
-   //          {
-   //             return Ok();
-   //          }
-   //       }
-   //       // If the user is not found, display an error message
-   //       ModelState.AddModelError("", "Invalid username or password");
-   //    }
-   //    return BadRequest(ModelState);
-   // }
+   [HttpPost("api-set-mfa")]
+   [Authorize]
+   public async Task<IActionResult> SetMfa([FromBody] LoginModel model)
+   {
+      return await ForwardRequestAsync("/Account/set-mfa", model);
+   }
+
+   [HttpPost("api-check-mfa-key")]
+   [Authorize]
+   public async Task<IActionResult> CheckMfaKey([FromBody] LoginModel model)
+   {
+      return await ForwardRequestAsync("/Account/check-mfa-key", model);
+   }
+
+   private async Task<IActionResult> ForwardRequestAsync(string uri, object model)
+   {
+      if (!ModelState.IsValid)
+      {
+         return BadRequest(ModelState);
+      }
+
+      var headerAuth = Request.Headers.Authorization.FirstOrDefault()?.Split(" ");
+      if (headerAuth == null)
+      {
+         return Unauthorized("Authorization header is missing or invalid.");
+      }
+
+      try
+      {
+         var jsonContent = new StringContent(
+             JsonSerializer.Serialize(model),
+             Encoding.UTF8,
+             "application/json"
+         );
+
+         _httpClient.DefaultRequestHeaders.Authorization =
+             new AuthenticationHeaderValue(headerAuth[0], headerAuth[1]);
+
+         var response = await _httpClient.PostAsync(uri, jsonContent);
+
+         if (response.IsSuccessStatusCode)
+         {
+            var responseData = await response.Content.ReadAsStringAsync();
+            return Ok(responseData);
+         }
+         else
+         {
+            return StatusCode((int)response.StatusCode, response.ReasonPhrase);
+         }
+      }
+      catch (Exception ex)
+      {
+         return StatusCode(500, $"Error al comunicarse con la API: {ex.Message}");
+      }
+   }
 }

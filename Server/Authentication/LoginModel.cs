@@ -16,15 +16,3 @@ public class UserNameModel
     [Required(ErrorMessage = "User name is required")]
     public string UserEmail { get; set; } = string.Empty;
 }
-
-public class ValidateUsernameRequest
-{
-    [Required(ErrorMessage = "Enter a valid email address")]
-    public string UserName { get; set; } = string.Empty;
-}
-
-public class ValidateUsernameResponse
-{
-    public bool IsValid { get; set; }
-    public string Message { get; set; } = string.Empty;
-}

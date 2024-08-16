@@ -21,10 +21,8 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider, IDisp
 
    public async override Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
-		Console.WriteLine("cuello de monica");
 		if (await _storage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))
 		{
-			Console.WriteLine("cuello de maryori");
 			// Read and parse the token 
 			var tokenAsString = await _storage.GetItemAsync<string>("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
 			var tokenHandler = new JwtSecurityTokenHandler()
