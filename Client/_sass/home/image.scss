@@ -1,11 +1,17 @@
 @use "../sass/utilities/mixins" as mx;
 
+.is-border-radius
+{
+   img{
+      border-radius: 10px;
+   }
+}
 
 @include mx.mobile {
 
    .is-img-responsive {
-      height: 170px;
-      width: 170px;
+      height: 168px;
+      width: 168px;
    }
 }
 
@@ -19,7 +25,8 @@
 
 @include mx.from(1400px) {
    .is-img-responsive {
-      height: 180px;
-      width: 180px;
+      height: 178px;
+      width: 178px;
    }
 }
+

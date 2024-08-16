@@ -5,18 +5,66 @@
 @inject AuthenticationService AuthService
 
 <PageContent>
-   <div class="section pt-6 is-large is-flex is-flex-direction-column">
+   <div class="section pt-6 px-2 is-large is-flex is-flex-direction-column">
       <div class="block">
          <h1 class="title is-size-4-touch">Habilita la autenticación en 2-Pasos</h1>
          <h2 class="subtitle">Es necesario para utilizar la aplicación</h2>   
       </div>
-      <div class="mt-4">
+      <div class="my-4 is-flex is-flex-wrap-wrap is-justify-content-space-around is-align-items-center">
          @if (!string.IsNullOrEmpty(qrImagenBase64))
          {
          // Listo- Encuadrar el Qr en una dimension adecuada
-            <figure class="image is-178x178">
-               <img src="data:image/jpeg;base64,@qrImagenBase64" alt="Imagen desde byte[]"/>
+            <figure class="image is-img-responsive is-border-radius">
+               <img src="data:image/jpeg;base64,@qrImagenBase64" alt="QR"/>
             </figure>
+
+            <div class="mt-4 is-hidden-desktop" style="width: 100%;"></div>
+            //has-text-centered-touch
+            <div style="flex-basis: 72%;">
+               <p class="is-family-monospace label mb-1 has-text-centered-touch">
+                  ESCANEA EL CODIGO QR
+               </p>
+               <p class="has-text-justified-touch mb-1">
+                  Abre la aplicación de autenticación y escanea la imagen de la izquierda,
+                  usando la cámara de tu teléfono.
+               </p>
+
+               <p class="is-family-monospace label mb-1 has-text-centered-touch">
+                  2FA KEY (Entrada Manual)
+               </p>
+               <p class="is-wordbreaked">
+                  @key
+               </p>
+            </div>
+         }
+      </div>
+      <hr>
+      <div class="my-4 is-flex is-flex-wrap-wrap is-justify-content-space-around is-align-items-center">
+         @if (!string.IsNullOrEmpty(qrImagenBase64))
+         {
+         // Listo- Encuadrar el Qr en una dimension adecuada
+            <figure class="image is-img-responsive is-border-radius">
+               <img src="data:image/jpeg;base64,@qrImagenBase64" alt="QR"/>
+            </figure>
+
+            <div class="mt-4 is-hidden-desktop" style="width: 100%;"></div>
+            //has-text-centered-touch
+            <div style="flex-basis: 72%;">
+               <p class="is-family-monospace label mb-1 has-text-centered-touch">
+                  ESCANEA EL CODIGO QR
+               </p>
+               <p class="has-text-justified-touch mb-1">
+                  Abre la aplicación de autenticación y escanea la imagen de la izquierda,
+                  usando la cámara de tu teléfono.
+               </p>
+
+               <p class="is-family-monospace label mb-1 has-text-centered-touch">
+                  2FA KEY (Entrada Manual)
+               </p>
+               <p class="is-wordbreaked">
+                  @key
+               </p>
+            </div>
          }
       </div>
    </div>
@@ -25,6 +73,7 @@
 @code
 {  
    string? qrImagenBase64;
+   string? key;
    protected override async Task OnInitializedAsync()
    {
       //Necesito revisar el status del MFA del usuario
@@ -52,7 +101,9 @@
             Console.WriteLine(email);
                //Aquí response deberia contener el qr (En formato Base64)
                //Console.WriteLine(response.AccessToken);
-               qrImagenBase64 = response.AccessToken;
+               //Console.WriteLine(response.QrString);
+               qrImagenBase64 = response.QrString;
+               key = response.AccessToken;
          }
       }
    }
