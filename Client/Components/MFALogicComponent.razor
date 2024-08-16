@@ -1,11 +1,30 @@
-@using Blazored.LocalStorage;
+@using Blazored.LocalStorage
 @using System.Security.Claims
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject AuthenticationService AuthService
 
+<PageContent>
+   <div class="section pt-6 is-large is-flex is-flex-direction-column">
+      <div class="block">
+         <h1 class="title is-size-4-touch">Habilita la autenticación en 2-Pasos</h1>
+         <h2 class="subtitle">Es necesario para utilizar la aplicación</h2>   
+      </div>
+      <div class="mt-4">
+         @if (!string.IsNullOrEmpty(qrImagenBase64))
+         {
+         // Listo- Encuadrar el Qr en una dimension adecuada
+            <figure class="image is-178x178">
+               <img src="data:image/jpeg;base64,@qrImagenBase64" alt="Imagen desde byte[]"/>
+            </figure>
+         }
+      </div>
+   </div>
+</PageContent>
+
 @code
 {  
+   string? qrImagenBase64;
    protected override async Task OnInitializedAsync()
    {
       //Necesito revisar el status del MFA del usuario
@@ -31,9 +50,9 @@
             //Aquí NO tiene configurado el MFA
             Console.WriteLine("Aquí NO tiene configurado el MFA");
             Console.WriteLine(email);
-               //Aquí response deberia contener el token
-               Console.WriteLine(response.AccessToken);
-               //Con este token debo de generar el qr
+               //Aquí response deberia contener el qr (En formato Base64)
+               //Console.WriteLine(response.AccessToken);
+               qrImagenBase64 = response.AccessToken;
          }
       }
    }

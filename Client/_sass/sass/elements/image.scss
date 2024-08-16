@@ -2,7 +2,7 @@
 @use "../utilities/css-variables" as cv;
 @use "../utilities/mixins" as mx;
 
-$dimensions: 16 24 32 48 64 96 128 !default;
+$dimensions: 16 24 32 48 64 96 128 178 !default;
 
 .#{iv.$class-prefix}image {
   display: block;

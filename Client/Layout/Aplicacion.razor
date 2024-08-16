@@ -12,14 +12,14 @@
          </CEBlazorBulma.Components.NavBar>
       }
 
-      @Contenido
+      @ChildContent
 
    </CascadingValue>
 </div>
 
 @code {
    [Parameter]
-   public required RenderFragment Contenido { get; set; }
+   public required RenderFragment ChildContent { get; set; }
 
    private Action<string>? OnGlobalThemeChange;
    private string globalTheme = "";
