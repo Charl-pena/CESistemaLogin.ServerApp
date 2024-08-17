@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using TBAnalisisFinanciero.Client.Models;
 
-namespace TBAnalisisFinanciero.Client.Helpers;
+namespace TBAnalisisFinanciero.Client.Auth;
 
 public class JwtAuthenticationStateProvider : AuthenticationStateProvider, IDisposable
 {

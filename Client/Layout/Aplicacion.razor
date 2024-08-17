@@ -1,5 +1,6 @@
 @inject CEBlazorBulma.Services.IYamlService yamlService
 @inject IConfiguration Configuration
+@inject IJSRuntime JSRuntime
 
 <div class=@globalTheme>
    <CascadingValue Value=@OnGlobalThemeChange>
@@ -27,7 +28,7 @@
 
    protected override async Task OnInitializedAsync()
    {
-      // Deserializar contenido del archivo YAML
+      await JSRuntime.InvokeVoidAsync("clearUri", "/");
       navbarContent = await yamlService
       .DeserializeFromFile<CEBlazorBulma.Models.NavBarModel>(Configuration["NavBarSettings:NavBarYAML"] ?? "");
       globalTheme = navbarContent?.Mainbar?.DefaultTheme ?? "";

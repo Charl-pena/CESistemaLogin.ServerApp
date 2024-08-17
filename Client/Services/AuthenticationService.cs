@@ -1,7 +1,6 @@
 using TBAnalisisFinanciero.Client.Models;
 using System.Net.Http.Json;
 using System.Net;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace TBAnalisisFinanciero.Client.Services;
 
@@ -15,7 +14,7 @@ public class AuthenticationService
       _httpClient = httpClient; 
    }
 
-   public async Task<TokenResponse?> MfaStatusAsync(UserNameModel requestModel)
+   public async Task<QrResponse?> MfaStatusAsync(UserNameModel requestModel)
    {
          /*No neceseramiente, puedo utilizar el mismo mecanismo de localstorage, solo necesito 
          actualizar el valor una vez se haya terminado la verificacion del usuario*/
@@ -23,22 +22,19 @@ public class AuthenticationService
       var response = await _httpClient.PostAsJsonAsync("Account/api-mfa", requestModel); 
       if (response.IsSuccessStatusCode)
       {
-         var loginResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
-         if(loginResponse == null)
+         var mfaResponse = await response.Content.ReadFromJsonAsync<QrResponse>();
+         if(mfaResponse == null)
          {
             var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
             Console.WriteLine(error); 
             throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
          }
-         return loginResponse; 
+         return mfaResponse; 
       }
       else if(response.StatusCode == HttpStatusCode.NotFound)
       {
-         // var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
-         return new TokenResponse(){AccessToken = ""};
-         // throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");            
-         // throw new Exception("Error al leer la respuesta de la API");            
-         // TODO: Handle the error in a proper way
+         //Estamos utilizando el token vacio como indicador de que ya tiene el mfa habilitado
+         return new QrResponse(){AccessToken = ""};
       }
       return null;
    }
@@ -71,7 +67,7 @@ public class AuthenticationService
       }
       return null;
    }
-   public async Task<bool?> CheckMfaKeyAsync(LoginRequest requestModel)
+   public async Task<TokenResponse?> CheckMfaKeyAsync(LoginRequest requestModel)
    {
          /*No neceseramiente, puedo utilizar el mismo mecanismo de localstorage, solo necesito 
          actualizar el valor una vez se haya terminado la verificacion del usuario*/
@@ -79,14 +75,14 @@ public class AuthenticationService
       var response = await _httpClient.PostAsJsonAsync("Account/api-check-mfa-key", requestModel); 
       if (response.IsSuccessStatusCode)
       {
-         // var loginResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
-         // if(loginResponse == null)
-         // {
-         //    var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
-         //    Console.WriteLine(error); 
-         //    throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
-         // }
-         return true; 
+         var mfaResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
+         if(mfaResponse == null)
+         {
+            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
+            Console.WriteLine(error); 
+            throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
+         }
+         return mfaResponse;  
       }
       else if(response.StatusCode == HttpStatusCode.NotFound)
       {
@@ -96,7 +92,7 @@ public class AuthenticationService
          // throw new Exception("Error al leer la respuesta de la API");            
          // TODO: Handle the error in a proper way
 
-         return false;
+         return null;
       }
       return null;
    }

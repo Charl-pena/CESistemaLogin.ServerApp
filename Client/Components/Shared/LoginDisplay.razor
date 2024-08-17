@@ -65,9 +65,11 @@
 	void activeUserChange() => activeUser = (string.IsNullOrEmpty(activeUser)) ? "is-active" : "";
 	private async Task LogoutAsync()
 	{
-		if(!(await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ"))){
+		if( await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ") )
+		{
 			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
 		}
+		//¿Se puede mejorar este codigo evitando llamar directamente a GetAuthenticationState?
 		await AuthStateProvider.GetAuthenticationStateAsync();
 	}
 	protected override async Task OnInitializedAsync()

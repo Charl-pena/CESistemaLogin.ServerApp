@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.LocalStorage;
 using CEBlazorBulma.Configuration;
 using TBAnalisisFinanciero.Client;
-using TBAnalisisFinanciero.Client.Helpers;
+using TBAnalisisFinanciero.Client.Auth;
 using TBAnalisisFinanciero.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace TBAnalisisFinanciero.Client.Helpers;
+namespace TBAnalisisFinanciero.Client.Auth;
 
 public class PDFBaseLogic : ComponentBase
 {
