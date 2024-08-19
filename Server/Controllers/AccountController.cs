@@ -1,24 +1,19 @@
-using TBAnalisisFinanciero.Server.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.AccessControl;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text.Json;
-using System.Threading.Tasks;
+using System.Text;
+
+using TBAnalisisFinanciero.Server.Authentication;
 
 namespace TBAnalisisFinanciero.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class AccountController(
-   // UserManager<AppUser> userManager,
-   //  IConfiguration configuration,
-   // SignInManager<AppUser> signInManager,
    IHttpClientFactory httpClientFactory) : ControllerBase
 {
    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheApiClient");
@@ -41,7 +36,30 @@ public class AccountController(
    [Authorize]
    public async Task<IActionResult> CheckMfaKey([FromBody] LoginModel model)
    {
-      return await ForwardRequestAsync("/Account/check-mfa-key", model);
+      var result = await ForwardRequestAsync("/Account/check-mfa-key", model);
+      // Verificar si el resultado fue un OkObjectResult
+      // if (result is OkObjectResult okResult)
+      if (result is OkObjectResult)
+      {
+         //agregamos la cookie
+         var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+         identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
+         identity.AddClaim(new Claim(ClaimTypes.Role, AppRoles.User));
+         
+         var principal = new ClaimsPrincipal(identity);
+         await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            principal,
+            new AuthenticationProperties
+            {
+                  IsPersistent = true,
+                  AllowRefresh = true,
+                  ExpiresUtc = DateTime.UtcNow.AddDays(1)
+            });
+         // Puedes acceder a los datos devueltos en okResult.Value
+         // var data = okResult.Value; // Aquí puedes hacer lo que necesites con los datos
+      }
+      return result;
    }
 
    private async Task<IActionResult> ForwardRequestAsync(string uri, object model)

@@ -37,7 +37,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider, IDisp
 				var claims = token.Claims.ToList();
 				
 			
-				var identity = new ClaimsIdentity(claims, "jwt", JwtRegisteredClaimNames.Sub, "role");
+				var identity = new ClaimsIdentity(claims, "Bearer", JwtRegisteredClaimNames.Sub, "role");
 				var user = new ClaimsPrincipal(identity);
 				var authState = new AuthenticationState(user);
 				

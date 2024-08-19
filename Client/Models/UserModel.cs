@@ -10,7 +10,7 @@ public class UserModel
    (new Claim[]
     {
         new (nameof(unique_name), unique_name),
-    }, "jwt"));
+    }, "Bearer"));
 
    public static UserModel FromClaimsPrincipal(ClaimsPrincipal principal) => new()
    {
