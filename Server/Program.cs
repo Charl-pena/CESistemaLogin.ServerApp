@@ -94,7 +94,7 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("RequireUserNoMFARole", policy => policy.RequireRole(AppRoles.UserNoMFA))
     .AddPolicy("RequireUserRole", policy => policy.RequireRole(AppRoles.User));
 
-const string MyAllowSpecificOrigins = "Cors-Settings";
+const string MyAllowSpecificOrigins = "wasm";
 builder.Services.AddCors(options =>
         {
            options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -134,6 +134,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".yml"] = "application/x-yaml";
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -147,9 +150,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
-
-var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".yml"] = "application/x-yaml";
 
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -175,7 +175,6 @@ app.Use(async (context, next) =>
 app.UseAuthentication();
 app.UseAuthorization();
 
-// app.MapRazorPages();
 app.MapControllers();
 
 app.Use(async (context, next) =>
