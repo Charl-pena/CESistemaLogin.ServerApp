@@ -82,12 +82,12 @@
       //Aquí debemos interactuar con el controlador que envie la key a la api
       if(_email != null && inputKey != null && _qrImagenBase64 != null)
       {
-         var resultado =await AuthService.SetMfaAsync(requestModel: new(){UserName = _email, Password = inputKey});
+         var resultado =await AuthService.SetMfaAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
          Console.WriteLine(resultado);
       }
       if(_email != null && inputKey != null && _qrImagenBase64 == null)
       {
-         var resultado =await AuthService.CheckMfaKeyAsync(requestModel: new(){UserName = _email, Password = inputKey});
+         var resultado =await AuthService.CheckMfaKeyAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
          //Aquí deberiamos de recibir un nuevo token el cual deberiamos de guardar sustituyendo el viejo
          if(resultado?.AccessToken !=null)
          {

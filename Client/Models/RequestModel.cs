@@ -7,7 +7,7 @@ public class LoginRequest
 {
    [Required]
    [EmailAddress] 
-   public string UserName { get; set; } = string.Empty; 
+   public string UserEmail { get; set; } = string.Empty; 
    
    [Required][StringLength(16, MinimumLength = 8)]
    public string Password { get; set; } = string.Empty;

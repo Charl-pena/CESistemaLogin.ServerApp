@@ -4,7 +4,7 @@ Logoitem:
   Href: /
   SVGPath: /images/logo.svg
 Mainbar:
-  DefaultTheme: bd-theme-malaquita is-malaquita
+  DefaultTheme: bd-theme-moon is-moon
   Items:
     - Name: Inicio
       Class: is-tab

@@ -22,28 +22,28 @@ public class AccountController(
    [Authorize]
    public async Task<IActionResult> MfaStatus([FromBody] UserNameModel model)
    {
-      return await ForwardRequestAsync("/Account/mfa", model);
+      return await ForwardRequestAsync("/ServerApp/mfa", model);
    }
 
    [HttpPost("api-set-mfa")]
    [Authorize]
    public async Task<IActionResult> SetMfa([FromBody] LoginModel model)
    {
-      return await ForwardRequestAsync("/Account/set-mfa", model);
+      return await ForwardRequestAsync("/ServerApp/set-mfa", model);
    }
 
    [HttpPost("api-check-mfa-key")]
    [Authorize]
    public async Task<IActionResult> CheckMfaKey([FromBody] LoginModel model)
    {
-      var result = await ForwardRequestAsync("/Account/check-mfa-key", model);
+      var result = await ForwardRequestAsync("/ServerApp/check-mfa-key", model);
       // Verificar si el resultado fue un OkObjectResult
       // if (result is OkObjectResult okResult)
       if (result is OkObjectResult)
       {
          //agregamos la cookie
          var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-         identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
+         identity.AddClaim(new Claim(ClaimTypes.Name, model.UserEmail));
          identity.AddClaim(new Claim(ClaimTypes.Role, AppRoles.User));
          
          var principal = new ClaimsPrincipal(identity);
