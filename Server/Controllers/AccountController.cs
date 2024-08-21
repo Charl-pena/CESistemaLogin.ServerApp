@@ -7,9 +7,9 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Text;
 
-using TBAnalisisFinanciero.Server.Authentication;
+using CESistemaLogin.Server.Authentication;
 
-namespace TBAnalisisFinanciero.Server.Controllers;
+namespace CESistemaLogin.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]

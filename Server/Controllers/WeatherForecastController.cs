@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TBAnalisisFinanciero.Server.Controllers;
+namespace CESistemaLogin.Server.Controllers;
 
 [Authorize]
 [ApiController]

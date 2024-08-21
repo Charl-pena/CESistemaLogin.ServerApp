@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace TBAnalisisFinanciero.Client.Models;
+namespace CESistemaLogin.Client.Models;
 public class QrResponse
 {
    [JsonPropertyName("token")] 

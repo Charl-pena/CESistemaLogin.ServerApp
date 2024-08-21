@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TBAnalisisFinanciero.Server.Authentication;
+namespace CESistemaLogin.Server.Authentication;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration)
     : IdentityDbContext<AppUser>(options)

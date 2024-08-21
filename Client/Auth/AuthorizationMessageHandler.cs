@@ -1,10 +1,10 @@
 using Blazored.LocalStorage;
 
-namespace TBAnalisisFinanciero.Client.Auth;
+namespace CESistemaLogin.Client.Auth;
 
 public class AuthorizationMessageHandler : DelegatingHandler
 {
-
+	private const string LocalStorageKey = "o8yo82q43rtbuiibeWQAFY8";
 	private readonly ILocalStorageService _localStorage;
 
 	public AuthorizationMessageHandler(ILocalStorageService localStorage)
@@ -14,10 +14,13 @@ public class AuthorizationMessageHandler : DelegatingHandler
 
 	protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 	{
-		if (await _localStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ", cancellationToken))
+		if(   !await _localStorage.ContainKeyAsync("000001", cancellationToken))
 		{
-			var token = await _localStorage.GetItemAsync<string>("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ", cancellationToken);
-			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+			if (await _localStorage.ContainKeyAsync(LocalStorageKey, cancellationToken))
+			{
+				var token = await _localStorage.GetItemAsync<string>(LocalStorageKey, cancellationToken);
+				request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+			}
 		}
 		
 		return await base.SendAsync(request, cancellationToken);

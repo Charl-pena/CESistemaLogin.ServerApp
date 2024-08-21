@@ -1,7 +1,7 @@
 @using Blazored.LocalStorage;
 @using System.Security.Claims
 
-@inject ILocalStorageService LocalStorage
+@* @inject ILocalStorageService LocalStorage *@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject CEBlazorBulma.Services.ISVGService SvgService
 @inject NavigationManager Navigation
@@ -65,12 +65,15 @@
 	void activeUserChange() => activeUser = (string.IsNullOrEmpty(activeUser)) ? "is-active" : "";
 	private async Task LogoutAsync()
 	{
-		if( await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ") )
+		await Task.Delay(50);
+		/*	Hay que cambiar este codigo para que realmente elimine la cookie
+		if( await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8") )
 		{
-			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ");
+			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8");
 		}
 		//¿Se puede mejorar este codigo evitando llamar directamente a GetAuthenticationState?
 		await AuthStateProvider.GetAuthenticationStateAsync();
+		*/
 	}
 	protected override async Task OnInitializedAsync()
    {

@@ -1,15 +1,15 @@
-using TBAnalisisFinanciero.Client.Models;
+using CESistemaLogin.Client.Models;
 using System.Net.Http.Json;
 using System.Net;
 
-namespace TBAnalisisFinanciero.Client.Services;
+namespace CESistemaLogin.Client.Services;
 
-// public class AuthenticationService : IAuthenticationService
-public class AuthenticationService
+// public class ServerCallsService : IServerCallsService
+public class ServerCallsService
 {
    // Inject the HttpClient into the constructor      
    private readonly HttpClient _httpClient; 
-   public AuthenticationService(HttpClient httpClient)
+   public ServerCallsService(HttpClient httpClient)
    { 
       _httpClient = httpClient; 
    }

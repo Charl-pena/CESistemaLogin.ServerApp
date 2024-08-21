@@ -1,9 +1,9 @@
 @using Blazored.LocalStorage
 @using System.Security.Claims
 
-@inject ILocalStorageService LocalStorage
+@* @inject ILocalStorageService LocalStorage *@
 @inject AuthenticationStateProvider AuthStateProvider
-@inject AuthenticationService AuthService
+@inject ServerCallsService ServerCallService
 
 <PageContent>
    <div class="section pt-6 px-2 is-large is-flex is-flex-direction-column">
@@ -82,16 +82,15 @@
       //Aquí debemos interactuar con el controlador que envie la key a la api
       if(_email != null && inputKey != null && _qrImagenBase64 != null)
       {
-         var resultado =await AuthService.SetMfaAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
+         var resultado =await ServerCallService.SetMfaAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
          Console.WriteLine(resultado);
       }
       if(_email != null && inputKey != null && _qrImagenBase64 == null)
       {
-         var resultado =await AuthService.CheckMfaKeyAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
+         var resultado =await ServerCallService.CheckMfaKeyAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
          //Aquí deberiamos de recibir un nuevo token el cual deberiamos de guardar sustituyendo el viejo
          if(resultado?.AccessToken !=null)
          {
-            //En este caso no es necesario checar si existe antes de establecerlo
             var parts = resultado.AccessToken.Split('.');
             if (parts.Length != 3)
             {
@@ -101,22 +100,18 @@
             
             resultado.AccessToken = String.Join('.', parts);
             
-            await LocalStorage.SetItemAsync("o8yo82q43rtbuiibeWQAFY8GFWEIGUO7G8FLKBJ", resultado.AccessToken);
-            
-		      //¿Se puede mejorar este codigo evitando llamar directamente a GetAuthenticationState?
-		      await AuthStateProvider.GetAuthenticationStateAsync();
+            await ((JwtAuthenticationStateProvider)AuthStateProvider).SetCurrentUserAsync(resultado.AccessToken, true);
          }
       }
    }
    protected override async Task OnInitializedAsync()
    {
       //Necesito revisar el status del MFA del usuario
-         //Si es valido guardo el nuevo token del usuario en el localstorage (debe de cambiar su rol o claim)
-         
-      _email = ((JwtAuthenticationStateProvider)AuthStateProvider).CurrentUser.unique_name;
+        //Si es valido guardo el nuevo token del usuario en el localstorage (debe de cambiar su rol o claim)
+      _email = ((JwtAuthenticationStateProvider)AuthStateProvider).CurrentUser.Unique_name;
       if(!String.IsNullOrEmpty(_email))
       {
-         var response = await AuthService.MfaStatusAsync(requestModel: new(){UserEmail = _email} );
+         var response = await ServerCallService.MfaStatusAsync(requestModel: new(){UserEmail = _email} );
          if(response == null)
          {
             //Aqui hubo un error

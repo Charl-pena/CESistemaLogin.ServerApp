@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\TBAnalisisFinanciero.Client.csproj" />
+    <ProjectReference Include="..\Client\CESistemaLogin.Client.csproj" />
   </ItemGroup>
 
 </Project>

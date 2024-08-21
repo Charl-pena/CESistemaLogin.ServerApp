@@ -1,4 +1,4 @@
-namespace TBAnalisisFinanciero.Server.Authentication;
+namespace CESistemaLogin.Server.Authentication;
 
 public static class AppRoles
 {

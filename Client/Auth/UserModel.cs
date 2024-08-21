@@ -1,19 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
-namespace TBAnalisisFinanciero.Client.Models;
+namespace CESistemaLogin.Client.Auth;
 
 public class UserModel
 {
-   public string unique_name { get; set; } = string.Empty; 
+   public string Unique_name { get; set; } = string.Empty; 
    public ClaimsPrincipal ToClaimsPrincipal() => new(new ClaimsIdentity
    (new Claim[]
     {
-        new (nameof(unique_name), unique_name),
+        new (nameof(Unique_name), Unique_name),
     }, "Bearer"));
 
    public static UserModel FromClaimsPrincipal(ClaimsPrincipal principal) => new()
    {
-      unique_name = principal.FindFirst(nameof(unique_name))?.Value ?? ""
+      Unique_name = principal.FindFirst(nameof(Unique_name))?.Value ?? ""
    };
 }

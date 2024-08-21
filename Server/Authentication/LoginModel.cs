@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TBAnalisisFinanciero.Server.Authentication;
+namespace CESistemaLogin.Server.Authentication;
 
 public class LoginModel
 {
