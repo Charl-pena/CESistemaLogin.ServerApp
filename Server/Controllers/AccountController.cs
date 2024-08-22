@@ -13,27 +13,44 @@ namespace CESistemaLogin.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class AccountController(
    IHttpClientFactory httpClientFactory) : ControllerBase
 {
    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheApiClient");
 
+   [HttpPost]
+   // [ValidateAntiForgeryToken]
+   public async Task<IActionResult> Logout([FromBody] UserNameModel model)
+   {
+      try
+      {
+         model.UserEmail = model.UserEmail ;
+         // Elimina la cookie de autenticación
+         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+         // Si se completa exitosamente, regresa un código 200 OK
+         return Ok(new { message = "Logout successful" });
+      }
+      catch (Exception ex)
+      {
+         // Si ocurre algún error, regresa un código 500 Internal Server Error con el detalle del error
+         return StatusCode(500, new { error = "Logout failed", details = ex.Message });
+      }
+   }
+
    [HttpPost("api-mfa")]
-   [Authorize]
    public async Task<IActionResult> MfaStatus([FromBody] UserNameModel model)
    {
       return await ForwardRequestAsync("/ServerApp/mfa", model);
    }
 
    [HttpPost("api-set-mfa")]
-   [Authorize]
    public async Task<IActionResult> SetMfa([FromBody] LoginModel model)
    {
       return await ForwardRequestAsync("/ServerApp/set-mfa", model);
    }
 
    [HttpPost("api-check-mfa-key")]
-   [Authorize]
    public async Task<IActionResult> CheckMfaKey([FromBody] LoginModel model)
    {
       var result = await ForwardRequestAsync("/ServerApp/check-mfa-key", model);

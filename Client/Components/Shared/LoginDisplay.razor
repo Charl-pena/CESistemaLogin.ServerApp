@@ -1,7 +1,7 @@
 @using Blazored.LocalStorage;
 @using System.Security.Claims
 
-@* @inject ILocalStorageService LocalStorage *@
+@inject ServerCallsService ServerCallService
 @inject AuthenticationStateProvider AuthStateProvider
 @inject CEBlazorBulma.Services.ISVGService SvgService
 @inject NavigationManager Navigation
@@ -65,7 +65,12 @@
 	void activeUserChange() => activeUser = (string.IsNullOrEmpty(activeUser)) ? "is-active" : "";
 	private async Task LogoutAsync()
 	{
-		await Task.Delay(50);
+
+		var email = new UserNameModel(){
+			UserEmail =((JwtAuthenticationStateProvider)AuthStateProvider).CurrentUser.Unique_name 
+		} ;
+		await ServerCallService.Logout(email);
+		
 		/*	Hay que cambiar este codigo para que realmente elimine la cookie
 		if( await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8") )
 		{

@@ -27,15 +27,7 @@ builder.Services.AddHttpClient("TheApiClient", client =>
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddRazorPages();
-
-// builder.Services.AddDbContext<AppDbContext>();
-
-// builder.Services.AddIdentityCore<AppUser>()
-// .AddRoles<IdentityRole>()
-// .AddSignInManager()
-// .AddEntityFrameworkStores<AppDbContext>()
-// .AddDefaultTokenProviders();
+// builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -43,8 +35,6 @@ builder.Services.AddAuthentication(options =>
    options.DefaultScheme = "JWT_OR_COOKIE";
    options.DefaultChallengeScheme = "JWT_OR_COOKIE";
    // options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-   // options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-   // options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddCookie(options =>
 {

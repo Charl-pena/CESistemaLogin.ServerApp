@@ -14,11 +14,14 @@ public class ServerCallsService
       _httpClient = httpClient; 
    }
 
+   public async Task<bool> Logout(UserNameModel requestModel)
+   {
+      var response = await _httpClient.PostAsJsonAsync("Account/Logout", requestModel); 
+
+      return response.IsSuccessStatusCode;
+   }
    public async Task<QrResponse?> MfaStatusAsync(UserNameModel requestModel)
    {
-         /*No neceseramiente, puedo utilizar el mismo mecanismo de localstorage, solo necesito 
-         actualizar el valor una vez se haya terminado la verificacion del usuario*/
-      
       var response = await _httpClient.PostAsJsonAsync("Account/api-mfa", requestModel); 
       if (response.IsSuccessStatusCode)
       {
@@ -40,9 +43,6 @@ public class ServerCallsService
    }
    public async Task<bool?> SetMfaAsync(LoginRequest requestModel)
    {
-         /*No neceseramiente, puedo utilizar el mismo mecanismo de localstorage, solo necesito 
-         actualizar el valor una vez se haya terminado la verificacion del usuario*/
-      
       var response = await _httpClient.PostAsJsonAsync("Account/api-set-mfa", requestModel); 
       if (response.IsSuccessStatusCode)
       {
@@ -69,9 +69,6 @@ public class ServerCallsService
    }
    public async Task<TokenResponse?> CheckMfaKeyAsync(LoginRequest requestModel)
    {
-         /*No neceseramiente, puedo utilizar el mismo mecanismo de localstorage, solo necesito 
-         actualizar el valor una vez se haya terminado la verificacion del usuario*/
-      
       var response = await _httpClient.PostAsJsonAsync("Account/api-check-mfa-key", requestModel); 
       if (response.IsSuccessStatusCode)
       {

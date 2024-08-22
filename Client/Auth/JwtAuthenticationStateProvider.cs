@@ -11,7 +11,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 	private const string LocalStorageKey = "o8yo82q43rtbuiibeWQAFY8";
 	private readonly ILocalStorageService _localStorage;
 	
-	public UserModel CurrentUser { get; private set; } = new();
+	public UsuarioActual CurrentUser { get; private set; } = new();
 
 	public JwtAuthenticationStateProvider(ILocalStorageService storage) 
 	{
@@ -38,7 +38,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 			var authState = new AuthenticationState(user);
 			if (user != null)
 			{
-				CurrentUser = UserModel.FromClaimsPrincipal(user);
+				CurrentUser = UsuarioActual.FromClaimsPrincipal(user);
 			}
 			return authState;
       }
