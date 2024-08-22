@@ -66,19 +66,11 @@
 	private async Task LogoutAsync()
 	{
 
-		var email = new UserNameModel(){
+		var userName = new UserNameModel(){
 			UserEmail =((JwtAuthenticationStateProvider)AuthStateProvider).CurrentUser.Unique_name 
 		} ;
-		await ServerCallService.Logout(email);
-		
-		/*	Hay que cambiar este codigo para que realmente elimine la cookie
-		if( await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8") )
-		{
-			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8");
-		}
-		//¿Se puede mejorar este codigo evitando llamar directamente a GetAuthenticationState?
-		await AuthStateProvider.GetAuthenticationStateAsync();
-		*/
+		await ServerCallService.Logout(userName);
+		await ((JwtAuthenticationStateProvider)AuthStateProvider).LogoutCurrentUserAsync();
 	}
 	protected override async Task OnInitializedAsync()
    {

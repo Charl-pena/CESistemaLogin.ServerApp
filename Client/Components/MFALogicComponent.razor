@@ -83,6 +83,10 @@
       if(_email != null && inputKey != null && _qrImagenBase64 != null)
       {
          var resultado =await ServerCallService.SetMfaAsync(requestModel: new(){UserEmail = _email, Password = inputKey});
+         if(resultado == false)
+         {
+            //Mostrar mensaje de error key proporcionada es invalida
+         }
          Console.WriteLine(resultado);
       }
       if(_email != null && inputKey != null && _qrImagenBase64 == null)
@@ -101,6 +105,9 @@
             resultado.AccessToken = String.Join('.', parts);
             
             await ((JwtAuthenticationStateProvider)AuthStateProvider).SetCurrentUserAsync(resultado.AccessToken, true);
+         }else if(resultado?.AccessToken == String.Empty)
+         {
+            //Aqui la key que proporciono no es valida
          }
       }
    }

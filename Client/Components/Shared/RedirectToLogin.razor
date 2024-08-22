@@ -10,6 +10,9 @@
 		if( await LocalStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8")){
 			await LocalStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8");
 		}
+		if( await LocalStorage.ContainKeyAsync("000001")){
+			await LocalStorage.RemoveItemAsync("000001");
+		}
 		string? destino = Configuration["ClientUrl"];
 		Navigation.NavigateTo($"{destino}/authentication/login", forceLoad: true);;
 	}

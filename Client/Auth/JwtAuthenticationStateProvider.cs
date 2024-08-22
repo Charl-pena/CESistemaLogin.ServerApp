@@ -58,6 +58,16 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
       await _localStorage.SetItemAsStringAsync(LocalStorageKey, currentUsertoken);
       NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
    }
+	public async Task LogoutCurrentUserAsync()
+   { 	
+		if( await _localStorage.ContainKeyAsync("o8yo82q43rtbuiibeWQAFY8")){
+			await _localStorage.RemoveItemAsync("o8yo82q43rtbuiibeWQAFY8");
+		}
+		if( await _localStorage.ContainKeyAsync("000001")){
+			await _localStorage.RemoveItemAsync("000001");
+		}
+      NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+   }
 
    private async Task<string?> GetCurrentUserAsync() => await _localStorage.GetItemAsStringAsync(LocalStorageKey);
 }

@@ -19,7 +19,7 @@ public class AccountController(
 {
    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheApiClient");
 
-   [HttpPost]
+   [HttpPost("logout")]
    // [ValidateAntiForgeryToken]
    public async Task<IActionResult> Logout([FromBody] UserNameModel model)
    {
@@ -54,7 +54,6 @@ public class AccountController(
    public async Task<IActionResult> CheckMfaKey([FromBody] LoginModel model)
    {
       var result = await ForwardRequestAsync("/ServerApp/check-mfa-key", model);
-      // Verificar si el resultado fue un OkObjectResult
       // if (result is OkObjectResult okResult)
       if (result is OkObjectResult)
       {
