@@ -7,7 +7,6 @@ namespace CESistemaLogin.Client.Services;
 // public class ServerCallsService : IServerCallsService
 public class ServerCallsService
 {
-   // Inject the HttpClient into the constructor      
    private readonly HttpClient _httpClient; 
    public ServerCallsService(HttpClient httpClient)
    { 

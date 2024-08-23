@@ -28,7 +28,7 @@ public class AccountController(
          model.UserEmail = model.UserEmail ;
          // Elimina la cookie de autenticación
          await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-         // Si se completa exitosamente, regresa un código 200 OK
+         
          return Ok(new { message = "Logout successful" });
       }
       catch (Exception ex)

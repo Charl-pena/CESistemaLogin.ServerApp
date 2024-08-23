@@ -14,8 +14,8 @@ static void ChecarConfiguracion(WebApplicationBuilder builder)
    }
 }
 
-
 var builder = WebApplication.CreateBuilder(args);
+
 ChecarConfiguracion(builder);
 
 builder.Services.AddHttpClient("TheApiClient", client =>
@@ -25,9 +25,7 @@ builder.Services.AddHttpClient("TheApiClient", client =>
    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-// Add services to the container.
 builder.Services.AddControllers();
-// builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -80,7 +78,6 @@ builder.Services.AddAuthentication(options =>
 
 // Use the policy syntax to add authorization
 builder.Services.AddAuthorizationBuilder()
-    // Use the policy syntax to add authorization
     .AddPolicy("RequireUserNoMFARole", policy => policy.RequireRole(AppRoles.UserNoMFA))
     .AddPolicy("RequireUserRole", policy => policy.RequireRole(AppRoles.User));
 
@@ -129,7 +126,6 @@ provider.Mappings[".yml"] = "application/x-yaml";
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
    app.UseSwagger();
