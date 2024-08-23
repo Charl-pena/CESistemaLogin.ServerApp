@@ -104,11 +104,13 @@
       if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(inputKey) && !string.IsNullOrEmpty(_qrImagenBase64))
       {
          var resultado = await ServerCallService.SetMfaAsync(requestModel: new() { UserEmail = _email, Password = inputKey });
-         _mostrarMensajeError = !resultado ?? false;
          if (resultado == null)
          {
             //Aqui hubo un error o 401 y hay que regresarlo a login
             _deslogear = true;
+         }else
+         {
+            _mostrarMensajeError= (bool)!resultado; 
          }
       }
       if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(inputKey) && _qrImagenBase64 == null)
