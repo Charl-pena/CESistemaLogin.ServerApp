@@ -19,21 +19,21 @@ public class ServerCallsService
       var response = await _httpClient.PostAsJsonAsync("Account/Logout", requestModel); 
       return response.IsSuccessStatusCode;
    }
+
    public async Task<QrResponse?> MfaStatusAsync(UserNameModel requestModel)
    {
       var response = await _httpClient.PostAsJsonAsync("Account/api-mfa", requestModel); 
       if (response.IsSuccessStatusCode)
       {
+         //Se espera que regrese el Qr
          var mfaResponse = await response.Content.ReadFromJsonAsync<QrResponse>();
          if(mfaResponse == null)
          {
-            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
-            Console.WriteLine(error); 
-            throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
+            return null;
          }
          return mfaResponse; 
       }
-      else if((int)response.StatusCode == 848)
+      else if((int)response.StatusCode == 769)
       {
          //Estamos utilizando el token vacio como indicador de que ya tiene el mfa habilitado
          return new QrResponse(){AccessToken = ""};
@@ -60,9 +60,10 @@ public class ServerCallsService
          var mfaResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
          if(mfaResponse == null)
          {
-            var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
-            Console.WriteLine(error); 
-            throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
+            return null;
+            // var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>(); 
+            // Console.WriteLine(error); 
+            // throw new Exception(error?.Message ?? "Error al leer la respuesta de la API");
          }
          return mfaResponse;  
       }

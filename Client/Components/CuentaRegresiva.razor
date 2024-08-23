@@ -1,0 +1,42 @@
+@using System.Threading
+@inject AuthenticationStateProvider AuthStateProvider
+
+<div class="modal is-active">
+   <div class="modal-background"></div>
+   <div class="modal-content">
+      <div class="box">
+         <div
+          class="block is-wordbreaked is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+            <h3>Cuenta Regresiva: @seconds</h3>
+         </div>
+      </div>
+   </div>
+</div>
+
+@code {
+   private int seconds = 3;
+   private Timer? timer;
+
+   protected override void OnInitialized()
+   {
+      timer = new Timer(OnTimerElapsed, null, 1000, 1000);
+   }
+
+   private void OnTimerElapsed(object? state)
+   {
+      if (seconds > 0)
+      {
+         seconds--;
+         InvokeAsync(StateHasChanged); // Actualiza la UI
+      }
+      else
+      {
+         timer?.Dispose();
+         Console.WriteLine("ya quiero romperle su culito a camila");
+         //InvokeAsync(async () => 
+         //{
+         //   await ((JwtAuthenticationStateProvider)AuthStateProvider).LogoutCurrentUserAsync();
+         //});
+      }
+   }
+}
