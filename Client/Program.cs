@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 using Blazored.LocalStorage;
 using CEBlazorBulma.Configuration;
-using CESistemaLogin.Client;
-using CESistemaLogin.Client.Auth;
-using CESistemaLogin.Client.Services;
+using CESistemaLogin.ServerApp.Client;
+using CESistemaLogin.ServerApp.Client.Auth;
+using CESistemaLogin.ServerApp.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

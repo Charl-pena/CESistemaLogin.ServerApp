@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CESistemaLogin.Server.Controllers;
+namespace CESistemaLogin.ServerApp.Server.Controllers;
 
 [Authorize]
 [ApiController]

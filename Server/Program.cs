@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using CESistemaLogin.Server.Authentication;
+using CESistemaLogin.ServerApp.Server.Authentication;
 
 static void ChecarConfiguracion(WebApplicationBuilder builder)
 {

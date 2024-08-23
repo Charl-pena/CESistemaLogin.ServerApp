@@ -1,8 +1,8 @@
-using CESistemaLogin.Client.Models;
+using CESistemaLogin.ServerApp.Client.Models;
 using System.Net.Http.Json;
 using System.Net;
 
-namespace CESistemaLogin.Client.Services;
+namespace CESistemaLogin.ServerApp.Client.Services;
 
 // public class ServerCallsService : IServerCallsService
 public class ServerCallsService

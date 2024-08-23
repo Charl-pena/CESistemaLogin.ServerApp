@@ -7,9 +7,9 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Text;
 
-using CESistemaLogin.Server.Authentication;
+using CESistemaLogin.ServerApp.Server.Authentication;
 
-namespace CESistemaLogin.Server.Controllers;
+namespace CESistemaLogin.ServerApp.Server.Controllers;
 
 [ApiController]
 [Route("[controller]")]

@@ -1,6 +1,6 @@
-using CESistemaLogin.Client.Models;
+using CESistemaLogin.ServerApp.Client.Models;
 
-namespace CESistemaLogin.Client.Services;
+namespace CESistemaLogin.ServerApp.Client.Services;
 public interface IServerCallsService
 {
    Task<TokenResponse> LoginUserAsync(LoginRequest requestModel);

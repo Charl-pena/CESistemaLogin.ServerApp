@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace CESistemaLogin.Client.Models;
+namespace CESistemaLogin.ServerApp.Client.Models;
 
 public class ApiErrorResponse
 {

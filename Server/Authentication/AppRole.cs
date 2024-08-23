@@ -1,4 +1,4 @@
-namespace CESistemaLogin.Server.Authentication;
+namespace CESistemaLogin.ServerApp.Server.Authentication;
 
 public static class AppRoles
 {

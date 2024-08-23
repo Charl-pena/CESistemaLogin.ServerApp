@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CESistemaLogin.Server.Authentication;
+namespace CESistemaLogin.ServerApp.Server.Authentication;
 
 public class LoginModel
 {

@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 
-namespace CESistemaLogin.Client.Auth;
+namespace CESistemaLogin.ServerApp.Client.Auth;
 
 public class AuthorizationMessageHandler : DelegatingHandler
 {

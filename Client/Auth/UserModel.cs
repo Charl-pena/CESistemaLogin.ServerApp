@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
-namespace CESistemaLogin.Client.Auth;
+namespace CESistemaLogin.ServerApp.Client.Auth;
 
 public class UsuarioActual
 {

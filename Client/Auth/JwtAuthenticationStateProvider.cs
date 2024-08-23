@@ -2,9 +2,9 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using CESistemaLogin.Client.Models;
+using CESistemaLogin.ServerApp.Client.Models;
 
-namespace CESistemaLogin.Client.Auth;
+namespace CESistemaLogin.ServerApp.Client.Auth;
 
 public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 {
