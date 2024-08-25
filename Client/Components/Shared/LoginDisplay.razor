@@ -44,17 +44,6 @@
 			</div>
 		</div>
 	</Authorized>
-	<NotAuthorized>
-		@* Render the content if the user is not logged in *@
-		<a class="bd-nav-item is-github  p-1" href="/authentication/login">
-			<span class="bd-nav-item-name is-hidden-touch">
-      	   <span class="is-hidden is-block-widescreen">Login</span>
-      	</span>
-			<figure class="image is-32x32">
-				@((MarkupString)svgLogin)
-			</figure>
-		</a>
-	</NotAuthorized>
 </AuthorizeView>
 
 @code 

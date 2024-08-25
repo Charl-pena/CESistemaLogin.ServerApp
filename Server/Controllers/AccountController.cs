@@ -19,6 +19,26 @@ public class AccountController(
 {
    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheApiClient");
 
+   [HttpPost("Login")]
+   [AllowAnonymous]
+   public async Task<IActionResult> Login([FromBody] LoginModel model)
+   {
+      //Codigo Funcionando
+      return Ok();
+   }
+      // try
+      // {
+      //    model.UserEmail = model.UserEmail ;
+      //    // Elimina la cookie de autenticación
+      //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+         
+      //    return Ok(new { message = "Logout successful" });
+      // }
+      // catch (Exception ex)
+      // {
+      //    // Si ocurre algún error, regresa un código 500 Internal Server Error con el detalle del error
+      //    return StatusCode(500, new { error = "Logout failed", details = ex.Message });
+      // }
    [HttpPost("logout")]
    // [ValidateAntiForgeryToken]
    public async Task<IActionResult> Logout([FromBody] UserNameModel model)

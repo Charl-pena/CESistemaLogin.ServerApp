@@ -5,6 +5,7 @@ namespace CESistemaLogin.ServerApp.Server.Authentication;
 public class LoginModel
 {
     [Required(ErrorMessage = "User name is required")]
+    [EmailAddress]
     public string UserEmail { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Password is required")]

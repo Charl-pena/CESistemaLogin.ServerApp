@@ -4,6 +4,7 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using CESistemaLogin.ServerApp.Server.Authentication;
+using CESistemaLogin.ServerApp.Server.Middlewares;
 
 static void ChecarConfiguracion(WebApplicationBuilder builder)
 {
@@ -24,8 +25,15 @@ builder.Services.AddHttpClient("TheApiClient", client =>
    client.BaseAddress = new Uri(apiUrl);
    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
+builder.Services.AddHttpClient("TheLocalClient", client =>
+{
+   string apiUrl = builder.Configuration["LocalAddress"]!;
+   client.BaseAddress = new Uri(apiUrl);
+   client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -144,39 +152,21 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseRouting();
 
-app.Use(async (context, next) =>
-{
-   // Verificar si la solicitud tiene un token en la URL
-   var token = context.Request.Query["token"].ToString();
-   if (!string.IsNullOrEmpty(token))
-   {
-      // Si se encuentra el token, añadirlo al encabezado Authorization
-      context.Request.Headers.Append("Authorization", $"Bearer {token}");
-   }
-
-   // Llamar al siguiente middleware
-   await next();
-});
-
 app.UseAuthentication();
 app.UseAuthorization();
 
+// app.UseMiddleware<AuthMiddleware>();
+
 app.MapControllers();
+app.MapRazorPages();
 
-app.Use(async (context, next) =>
-{
-   // Aplica la lógica de autenticación para otras rutas
-   if (context.User.Identity?.IsAuthenticated ?? false)
-   {
-      await next(); // Permite el acceso si el usuario está autenticado
-   }
-   else
-   {
-      // Redirige a la ruta de fallback si no está autenticado
-      context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-   }
-});
-
-app.MapFallbackToFile("index.html");
+// Mapear a index.html como fallback para rutas no especificadas, excepto /login
+app.MapWhen(
+    context => !context.Request.Path.StartsWithSegments("/login", StringComparison.OrdinalIgnoreCase),
+    builder => builder.UseRouting().UseEndpoints(endpoints =>
+    {
+        endpoints.MapFallbackToFile("index.html");
+    })
+);
 
 app.Run();

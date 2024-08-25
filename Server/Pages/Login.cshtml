@@ -1,0 +1,31 @@
+@page "/login"
+@model PageLoginModel
+
+@{
+   ViewData["Title"] = "Log in";
+}
+
+<div class="container is-max-tablet">
+   <div class="box no-box-in-mobile responsive-p-box">
+      @* <form method="post"  asp-controller="Sesion" asp-action="Login"> *@
+      <form method="post" >
+         <div asp-validation-summary="All" class="help is-danger"></div>
+         <div class="block pb-2">
+            <label>Sign in</label>
+         </div>
+         <div class="field pb-4">
+            <input asp-for="LoginModel.UserEmail" class="input" placeholder="Email" 
+               autocomplete="username"/>
+            <span asp-validation-for="LoginModel.UserEmail" class="help is-danger"></span>
+         </div>
+         <div class="field pb-4">
+            <input asp-for="LoginModel.Password" class="input" placeholder="Password" 
+               autocomplete="current-password"/>
+            <span asp-validation-for="LoginModel.Password" class="help is-danger"></span>
+         </div>
+         <div class="field pt-4 is-flex">
+            <button type="submit" class="ml-auto button has-text-weight-normal">Log In</button>
+         </div>
+      </form>
+   </div>
+</div>
