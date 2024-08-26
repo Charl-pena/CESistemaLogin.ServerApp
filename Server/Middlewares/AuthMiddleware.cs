@@ -13,8 +13,10 @@ public class AuthMiddleware
     {
         var path = context.Request.Path;
         
-        // Permitir acceso a /login sin autenticación
-        if (path.StartsWithSegments("/login", StringComparison.OrdinalIgnoreCase))
+        // Permitir acceso a /authentication/login sin autenticación
+        if (path.StartsWithSegments("/authentication/login", StringComparison.OrdinalIgnoreCase)
+        || path.StartsWithSegments("/account/login", StringComparison.OrdinalIgnoreCase)
+        )
         {
             await _next(context);
             return;
@@ -27,7 +29,13 @@ public class AuthMiddleware
         }
         else
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            // context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            // Establece el código de estado HTTP a 302 para redirigir
+            context.Response.StatusCode = StatusCodes.Status302Found;
+            // Establece la URL de redirección
+            context.Response.Headers.Location = "/authentication/login"; 
+            // Finaliza el procesamiento de la solicitud
+            return;
         }
     }
 }

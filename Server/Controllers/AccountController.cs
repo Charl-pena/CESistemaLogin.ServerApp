@@ -19,28 +19,15 @@ public class AccountController(
 {
    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheApiClient");
 
-   [HttpPost("Login")]
+   [HttpPost("login")]
    [AllowAnonymous]
    public async Task<IActionResult> Login([FromBody] LoginModel model)
    {
-      //Codigo Funcionando
-      return Ok();
+      var result = await ForwardRequestAsync("/ServerApp/login", model);
+      return result;
    }
-      // try
-      // {
-      //    model.UserEmail = model.UserEmail ;
-      //    // Elimina la cookie de autenticación
-      //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-         
-      //    return Ok(new { message = "Logout successful" });
-      // }
-      // catch (Exception ex)
-      // {
-      //    // Si ocurre algún error, regresa un código 500 Internal Server Error con el detalle del error
-      //    return StatusCode(500, new { error = "Logout failed", details = ex.Message });
-      // }
+
    [HttpPost("logout")]
-   // [ValidateAntiForgeryToken]
    public async Task<IActionResult> Logout([FromBody] UserNameModel model)
    {
       try
@@ -77,12 +64,12 @@ public class AccountController(
       // if (result is OkObjectResult okResult)
       if (result is OkObjectResult)
       {
-         //agregamos la cookie
          var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
          identity.AddClaim(new Claim(ClaimTypes.Name, model.UserEmail));
          identity.AddClaim(new Claim(ClaimTypes.Role, AppRoles.User));
          
          var principal = new ClaimsPrincipal(identity);
+         //agregamos la cookie
          await HttpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
             principal,
@@ -106,10 +93,10 @@ public class AccountController(
       }
 
       var headerAuth = Request.Headers.Authorization.FirstOrDefault()?.Split(" ");
-      if (headerAuth == null)
-      {
-         return Unauthorized("Authorization header is missing or invalid.");
-      }
+      // if (headerAuth == null)
+      // {
+      //    return Unauthorized("Authorization header is missing or invalid.");
+      // }
 
       try
       {
@@ -118,12 +105,13 @@ public class AccountController(
              Encoding.UTF8,
              "application/json"
          );
-
-         _httpClient.DefaultRequestHeaders.Authorization =
-             new AuthenticationHeaderValue(headerAuth[0], headerAuth[1]);
+         if (headerAuth != null)
+         {
+            _httpClient.DefaultRequestHeaders.Authorization =
+               new AuthenticationHeaderValue(headerAuth[0], headerAuth[1]);
+         }
 
          var response = await _httpClient.PostAsync(uri, jsonContent);
-
          if (response.IsSuccessStatusCode)
          {
             var responseData = await response.Content.ReadAsStringAsync();

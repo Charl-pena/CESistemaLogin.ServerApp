@@ -29,7 +29,6 @@ builder.Services.AddHttpClient("TheLocalClient", client =>
 {
    string apiUrl = builder.Configuration["LocalAddress"]!;
    client.BaseAddress = new Uri(apiUrl);
-   client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
 builder.Services.AddControllers();
@@ -155,18 +154,19 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// app.UseMiddleware<AuthMiddleware>();
+app.UseMiddleware<AuthMiddleware>();
 
 app.MapControllers();
 app.MapRazorPages();
 
 // Mapear a index.html como fallback para rutas no especificadas, excepto /login
 app.MapWhen(
-    context => !context.Request.Path.StartsWithSegments("/login", StringComparison.OrdinalIgnoreCase),
-    builder => builder.UseRouting().UseEndpoints(endpoints =>
-    {
-        endpoints.MapFallbackToFile("index.html");
-    })
+   context => !context.Request.Path.StartsWithSegments("/authentication/login", StringComparison.OrdinalIgnoreCase) 
+   || !context.Request.Path.StartsWithSegments("/account/login", StringComparison.OrdinalIgnoreCase),
+   builder => builder.UseRouting().UseEndpoints(endpoints =>
+   {
+       endpoints.MapFallbackToFile("index.html");
+   })
 );
 
 app.Run();

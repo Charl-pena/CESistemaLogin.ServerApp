@@ -1,17 +1,22 @@
-@page "/login"
+@page "/authentication/login"
 @model PageLoginModel
 
 @{
-   ViewData["Title"] = "Log in";
+   ViewData["Title"] = "Sign in";
 }
 
 <div class="container is-max-tablet">
    <div class="box no-box-in-mobile responsive-p-box">
-      @* <form method="post"  asp-controller="Sesion" asp-action="Login"> *@
       <form method="post" >
-         <div asp-validation-summary="All" class="help is-danger"></div>
-         <div class="block pb-2">
+         <div class="block pb-1">
             <label>Sign in</label>
+            @* Mostrar el mensaje de error si existe *@
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+               <span class="help is-danger">
+                  @Model.ErrorMessage
+               </span>
+            }
          </div>
          <div class="field pb-4">
             <input asp-for="LoginModel.UserEmail" class="input" placeholder="Email" 
@@ -20,7 +25,7 @@
          </div>
          <div class="field pb-4">
             <input asp-for="LoginModel.Password" class="input" placeholder="Password" 
-               autocomplete="current-password"/>
+               autocomplete="current-password" type="password"/>
             <span asp-validation-for="LoginModel.Password" class="help is-danger"></span>
          </div>
          <div class="field pt-4 is-flex">
