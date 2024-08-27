@@ -159,14 +159,6 @@ app.UseMiddleware<AuthMiddleware>();
 app.MapControllers();
 app.MapRazorPages();
 
-// Mapear a index.html como fallback para rutas no especificadas, excepto /login
-app.MapWhen(
-   context => !context.Request.Path.StartsWithSegments("/authentication/login", StringComparison.OrdinalIgnoreCase) 
-   || !context.Request.Path.StartsWithSegments("/account/login", StringComparison.OrdinalIgnoreCase),
-   builder => builder.UseRouting().UseEndpoints(endpoints =>
-   {
-       endpoints.MapFallbackToFile("index.html");
-   })
-);
+app.MapFallbackToFile("index.html");
 
 app.Run();

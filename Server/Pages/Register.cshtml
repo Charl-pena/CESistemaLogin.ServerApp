@@ -1,0 +1,50 @@
+@page "/authentication/register"
+@model RegisterPageModel
+
+@{
+   ViewData["Title"] = "Create Account";
+}
+
+<div class="container is-max-tablet">
+   <div class="box no-box-in-mobile responsive-p-box">
+      @if(Model.SuccessfulRegsiter){
+         <div class="block pb-1 has-text-centered">
+            <h3 class="title">¡Te has registrado con exito!</h3> 
+            <span class="subtitle">Verifica tu email para <a asp-page="Login" class="m-0 has-text-link">Ingresar</a></span>
+         </div>
+      }else
+      {
+         <form method="post" >
+            <div class="block pb-1">
+               <label>Create Account</label>
+               @* Mostrar el mensaje de error si existe *@
+               @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+               {
+                  <span class="help is-danger">
+                     @Model.ErrorMessage
+                  </span>
+               }
+            </div>
+            <div class="field pb-4">
+               <input asp-for="RegisterModel.Username" type="text" class="input" placeholder="Username" />
+               <span asp-validation-for="RegisterModel.Username" class="help is-danger"></span>
+            </div>
+            <div class="field pb-4">
+               <input asp-for="RegisterModel.Email" class="input" placeholder="Email" />
+               <span asp-validation-for="RegisterModel.Email" class="help is-danger"></span>
+            </div>
+            <div class="field pb-4">
+               <input asp-for="RegisterModel.Password" class="input" placeholder="Password" type="password"/>
+               <span asp-validation-for="RegisterModel.Password" class="help is-danger"></span>
+            </div>
+            <div class="field pb-4">
+               <input asp-for="RegisterModel.ConfirmPassword" class="input" placeholder="Confirm Password" type="password"/>
+               <span asp-validation-for="RegisterModel.ConfirmPassword" class="help is-danger"></span>
+            </div>
+            <div class="field pt-4 is-flex">
+               <button type="submit" class="ml-auto button has-text-weight-normal">Sign Up</button>
+            </div>
+         </form>
+      }
+   </div>
+</div>

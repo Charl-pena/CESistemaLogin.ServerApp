@@ -19,6 +19,13 @@ public class AccountController(
 {
    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheApiClient");
 
+   [HttpPost("register")]
+   [AllowAnonymous]
+   public async Task<IActionResult> Register([FromBody] RegisterModel model)
+   {
+      var result = await ForwardRequestAsync("/ServerApp/register", model);
+      return result;
+   }
    [HttpPost("login")]
    [AllowAnonymous]
    public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -93,10 +100,6 @@ public class AccountController(
       }
 
       var headerAuth = Request.Headers.Authorization.FirstOrDefault()?.Split(" ");
-      // if (headerAuth == null)
-      // {
-      //    return Unauthorized("Authorization header is missing or invalid.");
-      // }
 
       try
       {

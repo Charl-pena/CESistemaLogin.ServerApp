@@ -23,10 +23,13 @@
                autocomplete="username"/>
             <span asp-validation-for="LoginModel.UserEmail" class="help is-danger"></span>
          </div>
-         <div class="field pb-4">
+         <div class="field pb-2">
             <input asp-for="LoginModel.Password" class="input" placeholder="Password" 
                autocomplete="current-password" type="password"/>
             <span asp-validation-for="LoginModel.Password" class="help is-danger"></span>
+         </div>
+         <div class="help m-0">No Account?
+            <a asp-page="Register" class="m-0 has-text-link">Create Account</a>
          </div>
          <div class="field pt-4 is-flex">
             <button type="submit" class="ml-auto button has-text-weight-normal">Log In</button>

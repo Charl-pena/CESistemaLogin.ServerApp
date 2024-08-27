@@ -19,8 +19,8 @@ namespace CESistemaLogin.ServerApp.Server.Pages
       }
       private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheLocalClient");
 
-      [BindProperty]
       [Required]
+      [BindProperty]
       public LoginModel LoginModel { get; set; } = new();
       // Propiedad para el mensaje de error
       public string? ErrorMessage { get; set; }
