@@ -7,17 +7,33 @@
 
 <div class="container is-max-tablet">
    <div class="box no-box-in-mobile responsive-p-box">
-      <form method="post" >
          <div class="block pb-1">
             <label>Sign in</label>
             @* Mostrar el mensaje de error si existe *@
             @if (!string.IsNullOrEmpty(Model.ErrorMessage))
             {
-               <span class="help is-danger">
-                  @Model.ErrorMessage
-               </span>
+               if(Model.SendEmailConfirmation == null)
+               {
+                  <span class="help is-success">
+                     @Model.ErrorMessage
+                  </span>
+               }else
+               {
+                  <span class="help is-danger">
+                     @Model.ErrorMessage
+                  </span>
+               }
+            }
+            @if (Model.SendEmailConfirmation ?? false)
+            {
+               <form method="post" >
+                  <div class="help m-0"> 
+                     <button type="submit" name="action" value="resendEmail" class="m-0 has-text-link">Reenviar Email</button>
+                  </div>
+               </form>
             }
          </div>
+      <form method="post" >
          <div class="field pb-4">
             <input asp-for="LoginModel.UserEmail" class="input" placeholder="Email" 
                autocomplete="username"/>
