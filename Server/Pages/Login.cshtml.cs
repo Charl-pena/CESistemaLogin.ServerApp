@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 using CESistemaLogin.ServerApp.Server.Authentication;
 using System.Security.Claims;
@@ -13,11 +12,6 @@ namespace CESistemaLogin.ServerApp.Server.Pages
 {
    public class PageLoginModel(IHttpClientFactory httpClientFactory) : PageModel
    {
-      class TokenResponse
-      {
-         [JsonPropertyName("token")] 
-         public string? AccessToken { get; set; }
-      }
       private readonly HttpClient _httpClient = httpClientFactory.CreateClient("TheLocalClient");
 
       [Required]
@@ -32,8 +26,17 @@ namespace CESistemaLogin.ServerApp.Server.Pages
          if (action == "resendEmail")
          {
             SendEmailConfirmation = null;
-            ErrorMessage = "Ok Email de Verificación Reenviado.";
-            return Page();
+            var userNameModel = new UserNameModel(){UserEmail = LoginModel.UserEmail};
+            var emailResponse = await _httpClient.PostAsJsonAsync("/account/resend-email", userNameModel);
+            if(emailResponse.IsSuccessStatusCode)
+            {
+               var confirmationLink = await emailResponse.Content.ReadFromJsonAsync<TokenResponse>();
+               if(confirmationLink != null)
+               {
+                  ErrorMessage = confirmationLink.AccessToken;
+                  return Page();
+               }
+            }
          }
 
          var response = await _httpClient.PostAsJsonAsync("/account/login", LoginModel);

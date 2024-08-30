@@ -8,9 +8,13 @@
 <div class="container is-max-tablet">
    <div class="box no-box-in-mobile responsive-p-box">
       @if(Model.SuccessfulRegsiter){
-         <div class="block pb-1 has-text-centered">
+         <div class="block pb-1 has-text-centered is-wordbreaked">
             <h3 class="title">¡Te has registrado con exito!</h3> 
             <span class="subtitle">Verifica tu email para <a asp-page="Login" class="m-0 has-text-link">Ingresar</a></span>
+            <div class="subtitle">
+               *El siguiente link sería enviado a traves de un email provider*
+               <a href="@Model.ErrorMessage" class="m-0 has-text-link">Link Para Verificar Email</a>
+            </div>
          </div>
       }else
       {

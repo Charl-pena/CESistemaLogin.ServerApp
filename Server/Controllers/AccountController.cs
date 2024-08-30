@@ -11,6 +11,9 @@ using CESistemaLogin.ServerApp.Server.Authentication;
 
 namespace CESistemaLogin.ServerApp.Server.Controllers;
 
+/*
+OJO Hay que actualizar las rutas permitidas en el MIddleware de autenticación si se agregar una nueva ruta publica
+*/
 [ApiController]
 [Route("[controller]")]
 [Authorize]
@@ -50,6 +53,14 @@ public class AccountController(
          // Si ocurre algún error, regresa un código 500 Internal Server Error con el detalle del error
          return StatusCode(500, new { error = "Logout failed", details = ex.Message });
       }
+   }
+
+   [HttpPost("resend-email")]
+   [AllowAnonymous]
+   public async Task<IActionResult> ResendEmail([FromBody] UserNameModel model)
+   {
+      var result = await ForwardRequestAsync("/account/resend-email", model);
+      return result;
    }
 
    [HttpPost("api-mfa")]

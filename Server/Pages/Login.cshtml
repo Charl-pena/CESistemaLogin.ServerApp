@@ -7,7 +7,8 @@
 
 <div class="container is-max-tablet">
    <div class="box no-box-in-mobile responsive-p-box">
-         <div class="block pb-1">
+      <form method="post" >
+         <div class="block pb-1 is-wordbreaked">
             <label>Sign in</label>
             @* Mostrar el mensaje de error si existe *@
             @if (!string.IsNullOrEmpty(Model.ErrorMessage))
@@ -15,8 +16,9 @@
                if(Model.SendEmailConfirmation == null)
                {
                   <span class="help is-success">
-                     @Model.ErrorMessage
+                     *El siguiente link debería enviarse a traves de un email provider*
                   </span>
+                  <a href="@Model.ErrorMessage" class="help has-text-link is-link">Link Para Verificar Email</a>
                }else
                {
                   <span class="help is-danger">
@@ -26,14 +28,14 @@
             }
             @if (Model.SendEmailConfirmation ?? false)
             {
-               <form method="post" >
+               @* <form method="post" > *@
                   <div class="help m-0"> 
                      <button type="submit" name="action" value="resendEmail" class="m-0 has-text-link">Reenviar Email</button>
                   </div>
-               </form>
+               @* </form> *@
             }
          </div>
-      <form method="post" >
+
          <div class="field pb-4">
             <input asp-for="LoginModel.UserEmail" class="input" placeholder="Email" 
                autocomplete="username"/>

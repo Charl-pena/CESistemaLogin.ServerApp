@@ -1,12 +1,8 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 using CESistemaLogin.ServerApp.Server.Authentication;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CESistemaLogin.ServerApp.Server.Pages
 {
@@ -26,9 +22,14 @@ namespace CESistemaLogin.ServerApp.Server.Pages
          var response = await _httpClient.PostAsJsonAsync("/account/register", RegisterModel);
          if (response.IsSuccessStatusCode)
          {
-            // var mfaResponse = await response.Content.ReadAsStringAsync();
-            SuccessfulRegsiter = true;
-            return Page();
+            var confirmationLink = await response.Content.ReadFromJsonAsync<TokenResponse>();
+            if (confirmationLink != null)
+            {
+               // var mfaResponse = await response.Content.ReadAsStringAsync();
+               SuccessfulRegsiter = true;
+               ErrorMessage = confirmationLink.AccessToken;
+               return Page();
+            }
          }
          // Si la autenticación falla, asigna un mensaje de error
          ErrorMessage = "Invalid registration attempt. Please try again at a later time.";

@@ -2,6 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CESistemaLogin.ServerApp.Server.Authentication;
 
+public class UserNameModel
+{
+   [Required(ErrorMessage = "User name is required")]
+   public string UserEmail { get; set; } = string.Empty;
+}
 public class LoginModel
 {
    [Required(ErrorMessage = "Email is required")]
@@ -12,7 +17,6 @@ public class LoginModel
    [DataType(DataType.Password)]
    public string Password { get; set; } = string.Empty;
 }
-
 public class RegisterModel
 {
    [Required]
@@ -31,10 +35,3 @@ public class RegisterModel
    [Compare("Password", ErrorMessage = "Passwords don't match.")]
    public string ConfirmPassword { get; set; } = string.Empty;
 }
-
-public class UserNameModel
-{
-   [Required(ErrorMessage = "User name is required")]
-   public string UserEmail { get; set; } = string.Empty;
-}
-
