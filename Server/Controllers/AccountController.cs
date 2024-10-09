@@ -29,6 +29,13 @@ public class AccountController(
       var result = await ForwardRequestAsync("/ServerApp/register", model);
       return result;
    }
+   [HttpPost("reset-password")]
+   [AllowAnonymous]
+   public async Task<IActionResult> ResetPassword([FromBody] UserNameModel model)
+   {
+      var result = await ForwardRequestAsync("/ServerApp/reset-password", model);
+      return result;
+   }
    [HttpPost("login")]
    [AllowAnonymous]
    public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -59,7 +66,7 @@ public class AccountController(
    [AllowAnonymous]
    public async Task<IActionResult> ResendEmail([FromBody] UserNameModel model)
    {
-      var result = await ForwardRequestAsync("/account/resend-email", model);
+      var result = await ForwardRequestAsync("/admin/resend-email", model);
       return result;
    }
 

@@ -15,7 +15,7 @@ namespace CESistemaLogin.ServerApp.Server.Pages
       public RegisterModel RegisterModel { get; set; } = new();
       // Propiedad para el mensaje de error
       public string? ErrorMessage { get; set; }
-      public bool SuccessfulRegsiter { get; set; } = false;
+      public string? SuccessMessage { get; set; }
 
       public async Task<IActionResult> OnPostAsync()
       {
@@ -26,8 +26,8 @@ namespace CESistemaLogin.ServerApp.Server.Pages
             if (confirmationLink != null)
             {
                // var mfaResponse = await response.Content.ReadAsStringAsync();
-               SuccessfulRegsiter = true;
-               ErrorMessage = confirmationLink.AccessToken;
+               SuccessMessage = confirmationLink.AccessToken;
+               ErrorMessage = null;
                return Page();
             }
          }

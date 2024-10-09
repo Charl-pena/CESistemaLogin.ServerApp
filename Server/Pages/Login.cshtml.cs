@@ -18,6 +18,7 @@ namespace CESistemaLogin.ServerApp.Server.Pages
       [BindProperty]
       public LoginModel LoginModel { get; set; } = new();
       public string? ErrorMessage { get; set; }
+      public string? EmailLink { get; set; }
       public bool? SendEmailConfirmation {get; set;} = false;
 
       public async Task<IActionResult> OnPostAsync(string? action)
@@ -33,7 +34,8 @@ namespace CESistemaLogin.ServerApp.Server.Pages
                var confirmationLink = await emailResponse.Content.ReadFromJsonAsync<TokenResponse>();
                if(confirmationLink != null)
                {
-                  ErrorMessage = confirmationLink.AccessToken;
+                  EmailLink = confirmationLink.AccessToken;
+                  // Console.WriteLine(EmailLink);
                   return Page();
                }
             }

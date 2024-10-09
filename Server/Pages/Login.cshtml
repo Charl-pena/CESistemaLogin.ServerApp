@@ -11,14 +11,14 @@
          <div class="block pb-1 is-wordbreaked">
             <label>Sign in</label>
             @* Mostrar el mensaje de error si existe *@
-            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            @if (!string.IsNullOrEmpty(Model.EmailLink))
             {
                if(Model.SendEmailConfirmation == null)
                {
                   <span class="help is-success">
                      *El siguiente link debería enviarse a traves de un email provider*
                   </span>
-                  <a href="@Model.ErrorMessage" class="help has-text-link is-link">Link Para Verificar Email</a>
+                  <a href="@Model.EmailLink" class="help has-text-link is-link">Link Para Verificar Email</a>
                }else
                {
                   <span class="help is-danger">
@@ -48,6 +48,9 @@
          </div>
          <div class="help m-0">No Account?
             <a asp-page="Register" class="m-0 has-text-link">Create Account</a>
+         </div>
+         <div class="help m-0">
+            <a asp-page="Password" class="m-0 has-text-link">Reset Password</a>
          </div>
          <div class="field pt-4 is-flex">
             <button type="submit" class="ml-auto button has-text-weight-normal">Log In</button>

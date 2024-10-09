@@ -37,10 +37,12 @@ public class AuthMiddleware
     private static bool IsPublicRoute(PathString path)
     {
         return path.StartsWithSegments("/authentication/login", StringComparison.OrdinalIgnoreCase) ||
-               path.StartsWithSegments("/account/login", StringComparison.OrdinalIgnoreCase) ||
                path.StartsWithSegments("/authentication/register", StringComparison.OrdinalIgnoreCase) ||
+               path.StartsWithSegments("/authentication/reset-password", StringComparison.OrdinalIgnoreCase) ||
+               path.StartsWithSegments("/account/login", StringComparison.OrdinalIgnoreCase) ||
                path.StartsWithSegments("/account/register", StringComparison.OrdinalIgnoreCase) || 
-               path.StartsWithSegments("/account/resend-email", StringComparison.OrdinalIgnoreCase)
+               path.StartsWithSegments("/account/resend-email", StringComparison.OrdinalIgnoreCase) ||
+               path.StartsWithSegments("/account/reset-password", StringComparison.OrdinalIgnoreCase) 
                ;
     }
 }
